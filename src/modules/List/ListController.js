@@ -1,10 +1,8 @@
-export class ListController {
-    constructor(model) {
-        this.model = model;
-    }
+import {BaseController} from "../Base/BaseController.js";
 
-    getMovies(url) {
-        this.model.films(url)
+export class ListController extends BaseController {
+    constructor(model) {
+        super(model);
     }
 
     handleExpand(list, text) {

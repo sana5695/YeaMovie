@@ -1,13 +1,15 @@
-export class SliderController {
+import {BaseController} from "../Base/BaseController.js";
+
+export class SliderController extends BaseController {
     constructor(model) {
-        this.model = model;
+        super(model);
     }
 
-    getMovies(url) {
-        this.model.films(url)
+    handlePreviousSlide = (index) => {
+        return this.model.showPreviousSlide(index)
     }
 
-    handleExpand(list, text) {
-        return this.model.expand(list, text);
+    handleNextSlide = (index) => {
+        return this.model.showNextSlide(index)
     }
 }

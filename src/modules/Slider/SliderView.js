@@ -1,84 +1,55 @@
-import {CardFactory} from "../../core/CardFactory.js";
+import {BaseView} from "../Base/BaseView.js";
 import {ButtonFactory} from "../../core/ButtonFactory.js";
 
-export class SliderView {
-    constructor(controller, observer, root) {
-        this.root = root;
-        this.observer = observer;
-        this.controller = controller;
+export class SliderView extends BaseView {
+    constructor(controller, observer, root, urls) {
+        super(controller, observer, root, urls);
         this.size = 'big'
 
-        this.observer.subscribe((movies) => this.update(movies));
+        this.observer.subscribe(() => this.getSlides())
 
-        this.listNav = document.createElement('nav')
+        this.container.classList.add('movie-slider__container');
+        this.navigation.className = 'slider__nav'
 
-        this.listContainer = document.createElement('div');
-        this.listContainer.classList.add('movie-slider__container');
+        this.prevButton = ButtonFactory.createButton('<', '','Prev')
+        this.nextButton = ButtonFactory.createButton('>', '','Next')
+
+        this.slideIndex = 0
+        this.slides = []
 
         this.bindListeners();
     }
 
-
-
     bindListeners() {
-
+        this.navListener(this.navigation)
+        this.prevButton.addEventListener('click', (event) => this.onChangeSlide(event.target.dataset.id));
+        this.nextButton.addEventListener('click', (event) => this.onChangeSlide(event.target.dataset.id));
     }
 
-    update(movies) {
-        this.render(movies);
+    onChangeSlide = (data) => {
+        if (data === 'Prev')this.slideIndex = this.controller.handlePreviousSlide(this.slideIndex)
+        if (data === 'Next')this.slideIndex = this.controller.handleNextSlide(this.slideIndex)
+        this.updateSlider();
     }
 
-    render(movies) {
-        const movieCardsHtml = movies.map(movie => {
-            return CardFactory.createCard(movie, this.size).render();
+    updateSlider() {
+        this.slides.forEach((slide, index) => {
+            if (index === this.slideIndex) slide.style.display = 'flex';
+            else slide.style.display = 'none';
         });
-        this.listContainer.innerHTML = movieCardsHtml.join('');
-        const slider = this.listContainer
-        const prevButton = document.querySelector('.prev-button');
-        const nextButton = document.querySelector('.next-button');
-        const slides = Array.from(slider.querySelectorAll('.big'));
-        const slideCount = slides.length;
-        let slideIndex = 0;
-
-// Устанавливаем обработчики событий для кнопок
-        prevButton.addEventListener('click', showPreviousSlide);
-        nextButton.addEventListener('click', showNextSlide);
-
-// Функция для показа предыдущего слайда
-        function showPreviousSlide() {
-            slideIndex = (slideIndex - 1 + slideCount) % slideCount;
-            updateSlider();
-        }
-
-// Функция для показа следующего слайда
-        function showNextSlide() {
-            slideIndex = (slideIndex + 1) % slideCount;
-            updateSlider();
-        }
-
-// Функция для обновления отображения слайдера
-        function updateSlider() {
-            slides.forEach((slide, index) => {
-                if (index === slideIndex) {
-                    slide.style.display = 'flex';
-                } else {
-                    slide.style.display = 'none';
-                }
-            });
-        }
-
-        console.log(slideCount)
-
-// Инициализация слайдера
-        updateSlider();
-
     }
 
+    getSlides(){
+        this.slides = Array.from(this.container.querySelectorAll('.big'));
+        this.updateSlider();
+    }
 
     mount() {
-        this.controller.getMovies();
-        this.root.appendChild(this.listNav)
-        this.root.appendChild(this.listContainer);
+        this.controller.getMovies(this.urls[0].url);
+        this.root.appendChild(this.navigation);
+        this.createButtons(this.urls, this.navigation.className);
+        this.root.appendChild(this.prevButton);
+        this.root.appendChild(this.nextButton);
+        this.root.appendChild(this.container);
     }
-
 }

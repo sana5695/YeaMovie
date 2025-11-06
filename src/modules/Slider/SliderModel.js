@@ -1,27 +1,23 @@
-export class SliderModel {
+import {BaseModel} from "../Base/BaseModel.js";
+
+export class SliderModel extends BaseModel{
     constructor(movieService, observer) {
-        this.movieService = movieService;
-        this.observer = observer;
+        super(movieService, observer);
+        this.slideCount = 0
+        this.observer.subscribe(() => this.getCount());
     }
 
-    async films(url){
-        url = !url ? 'POPULAR_SERIES' : url   // поменять
-        const rawMovies = await this.movieService.getMovies(this.movieService.config[url])
-        const movies = this.formatMovies(rawMovies.items)
-        this.observer.setState(movies)
+    getCount() {
+        this.slideCount = this.observer.getState().length;
     }
 
-    formatMovies(rawMovies) {
-        return rawMovies.map(movie => ({
-            title: movie.nameRu,
-            genres: movie.genres.map(item => item.genre).join(', '),
-            rating: movie.ratingKinopoisk || movie.rating,
-            poster: movie.posterUrlPreview,
-            description: movie.description,
-            coverUrl: movie.posterUrlPreview,
-            year: movie.year,
-            id: movie.kinopoiskId || movie.filmId,
-        }));
+    showPreviousSlide = (index) => {
+        return (index - 1 + this.slideCount) % this.slideCount;
     }
+
+    showNextSlide = (index) => {
+        return (index + 1) % this.slideCount;
+    }
+
 }
 

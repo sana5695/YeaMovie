@@ -1,16 +1,12 @@
 import {BaseView} from "../Base/BaseView.js";
-import {ButtonFactory} from "../../core/ButtonFactory.js";
+import {Button} from "../Button/Button.js";
 
 export class ListView extends BaseView {
-    constructor(controller, observer, root, urls) {
-        super(controller, observer, root, urls);
+    constructor(controller, observer, root, data) {
+        super(controller, observer, root, data);
 
-
-        this.expandButton = ButtonFactory.createButton('Развернуть', )
         this.container.classList.add('movie-list__container', 'hidden');
         this.navigation.className = 'list__nav'
-
-        this.bindListeners();
     }
 
     onExpandClick = () => {
@@ -23,10 +19,11 @@ export class ListView extends BaseView {
     }
 
     mount() {
-        this.controller.getMovies(this.urls[0].url);
+        this.controller.getMovies(this.data[0].url);
         this.root.appendChild(this.navigation)
         this.root.appendChild(this.container);
-        this.root.appendChild(this.expandButton)
-        this.createButtons(this.urls, this.navigation.className);
+        this.expandButton = Button.create('Развернуть', this.root.className);
+        this.createNavButtons(this.data, this.navigation.className);
+        this.bindListeners();
     }
 }

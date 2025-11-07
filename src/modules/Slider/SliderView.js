@@ -1,9 +1,9 @@
 import {BaseView} from "../Base/BaseView.js";
-import {ButtonFactory} from "../../core/ButtonFactory.js";
+import {Button} from "../Button/Button.js";
 
 export class SliderView extends BaseView {
-    constructor(controller, observer, root, urls) {
-        super(controller, observer, root, urls);
+    constructor(controller, observer, root, data) {
+        super(controller, observer, root, data);
         this.size = 'big'
 
         this.observer.subscribe(() => this.getSlides())
@@ -11,13 +11,13 @@ export class SliderView extends BaseView {
         this.container.classList.add('movie-slider__container');
         this.navigation.className = 'slider__nav'
 
-        this.prevButton = ButtonFactory.createButton('<', '','Prev')
-        this.nextButton = ButtonFactory.createButton('>', '','Next')
+        this.arrowsContainer = document.createElement('div');
+        this.arrowsContainer.className = 'movie-slider__arrows-container';
+        this.root.appendChild(this.arrowsContainer);
 
         this.slideIndex = 0
         this.slides = []
 
-        this.bindListeners();
     }
 
     bindListeners() {
@@ -34,8 +34,7 @@ export class SliderView extends BaseView {
 
     updateSlider() {
         this.slides.forEach((slide, index) => {
-            if (index === this.slideIndex) slide.style.display = 'flex';
-            else slide.style.display = 'none';
+            slide.style.display = index === this.slideIndex ? "flex" : "none";
         });
     }
 
@@ -45,11 +44,11 @@ export class SliderView extends BaseView {
     }
 
     mount() {
-        this.controller.getMovies(this.urls[0].url);
-        this.root.appendChild(this.navigation);
-        this.createButtons(this.urls, this.navigation.className);
-        this.root.appendChild(this.prevButton);
-        this.root.appendChild(this.nextButton);
-        this.root.appendChild(this.container);
+        this.controller.getMovies(this.data[0].url);
+        this.root.append(this.navigation, this.container);
+        this.createNavButtons(this.data, this.navigation.className, 'nav');
+        this.prevButton = Button.create('<', this.arrowsContainer.className, 'arrow','Prev')
+        this.nextButton = Button.create('>', this.arrowsContainer.className,'arrow','Next')
+        this.bindListeners();
     }
 }

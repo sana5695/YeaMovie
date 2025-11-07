@@ -7,67 +7,52 @@ body {
     background: #AADDFF;
 }
 
-
 @media screen and (min-width: 1200px) {
     .movie-list__container {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
     }
-
     .main{
         width: 1200px;
         margin: 0 auto;
     }
-
     .card{
         width: 225px;
         height: 400px;
     }
-
     .card__top {
         flex: 0 0 280px;
     }
-
     .movie__info__subtitle > p {
         font-size: 17px;
     }
     .movie__info_title {
         font-size: 24px;
     }
-
 }
-
-
 @media screen and (max-width: 1200px) {
     .movie-list__container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
     }
-
     .main{
         width: 650px;
         margin: 0 auto;
     }
-
     .card{
         width: 150px;
         height: 280px;
     }
-
     .card__top {
         flex: 0 0 200px;
     }
-
     .movie__info__subtitle > p {
         font-size: 10px;
     }
     .movie__info_title {
         font-size: 17px;
     }
-
-
 }
-
 @media screen and (max-width: 750px) {
     .movie-list__container {
         display: grid;
@@ -77,25 +62,20 @@ body {
         width: 280px;
         margin: 0 auto;
     }
-
     .card{
         width: 120px;
         height: 200px;
     }
-
     .card__top {
         flex: 0 0 150px;
     }
-
     .movie__info__subtitle > p {
         font-size: 8px;
     }
-
     .movie__info_title {
         font-size: 10px;
     }
 }
-
 
 .card {
 
@@ -108,19 +88,14 @@ body {
     background-color: white;
     margin: auto auto 25px;
 }
-
-/* При наведении на карточку - меняем цвет тени */
 .card.small:hover {
     box-shadow: 4px 8px 16px rgba(52, 102, 255, 0.2);
     transform: scale(1.05);
 }
-
 .card__top {
     position: relative;
     overflow: hidden; /* Скрываем, что выходит за пределы */
 }
-
-/* Контейнер для картинки */
 .card__image {
     display: block;
     position: absolute;
@@ -129,7 +104,6 @@ body {
     width: 100%;
     height: 100%;
 }
-
 .card__image > img {
     width: 100%;
     height: 100%;
@@ -137,17 +111,12 @@ body {
     transition: 0.2s;
 }
 
-
-/* Размещаем скидку на товар относительно изображения */
 .movie__info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
     padding: 10px;
 }
-
-
 .movie__info_title {
     display: block;
     font-weight: 400;
@@ -157,11 +126,9 @@ body {
 .movie__info_year{
     display: block;
 }
-
 .movie__info_category{
     display: block;
 }
-
 .movie__info__subtitle > p {
     font-weight: 400;
     line-height: 100%;
@@ -172,7 +139,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 .movie-list__container {
     flex-basis: 1700px;
     position: relative;
@@ -181,12 +147,9 @@ body {
     transition: flex-basis 1s ease-out;
 
 }
-
 .movie-list__container.hidden{
     flex-basis: 420px;
 }
-
-
 
 .movie-slider__item{
     display: flex;
@@ -194,7 +157,6 @@ body {
     width: 1200px; /* Фиксированная ширина */
     overflow: hidden; /* Скрываем выходящие за границы изображения */
     position: relative;}
-
 .movie-slider__list{
     display: flex; /* Располагаем слайды в ряд */
     flex-direction: column;
@@ -209,19 +171,6 @@ body {
     flex-direction: row;
 
 }
-
 .big > .card__top{
     flex: 0 0 400px;
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,12 +1,12 @@
-import {ButtonFactory} from "../../core/ButtonFactory.js";
 import {CardFactory} from "../../core/CardFactory.js";
+import {Button} from "../Button/Button.js";
 
 export class BaseView {
-    constructor(controller, observer, root, urls) {
+    constructor(controller, observer, root, data) {
         this.root = root;
         this.observer = observer;
         this.controller = controller;
-        this.urls = urls;
+        this.data = data;
         this.navigation = document.createElement('nav')
 
         this.buttonMap = new Map()
@@ -14,9 +14,9 @@ export class BaseView {
         this.container = document.createElement('div');
     }
 
-    createButtons(btns, location) {
-        for( let btn of btns ) {
-            const button = ButtonFactory.createButton(btn.name, location);
+    createNavButtons(btns, selector, className) {
+        for( let btn of btns) {
+            const button = Button.create(btn.name, selector, className);
             this.buttonMap.set(button, btn.url);
         }
     }

@@ -5,11 +5,11 @@ export class SliderController extends BaseController {
         super(model);
     }
 
-    handlePreviousSlide = (index) => {
-        return this.model.showPreviousSlide(index)
+    handlePreviousSlide(index) {
+        return this.model.showPreviousSlide(index);
     }
 
-    handleNextSlide = (index) => {
-        return this.model.showNextSlide(index)
+    handleNextSlide(index) {
+        return this.model.showNextSlide(index);
     }
 }

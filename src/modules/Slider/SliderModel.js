@@ -1,13 +1,13 @@
 import {BaseModel} from "../Base/BaseModel.js";
 
-export class SliderModel extends BaseModel{
-    constructor(movieService, observer) {
-        super(movieService, observer);
-        this.slideCount = 0
-        this.observer.subscribe(() => this.getCount());
+export class SliderModel extends BaseModel {
+    constructor(movieService, observer, config) {
+        super(movieService, observer, config);
+        this.slideCount = 0;
+        this.observer.subscribe(() => this.updateSlideCount());
     }
 
-    getCount() {
+    updateSlideCount() {
         this.slideCount = this.observer.getState().length;
     }
 
@@ -18,6 +18,5 @@ export class SliderModel extends BaseModel{
     showNextSlide = (index) => {
         return (index + 1) % this.slideCount;
     }
-
 }
 

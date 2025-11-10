@@ -1,10 +1,10 @@
 export class Config {
-    API_KEY = 'd6eecabd-8d16-47f7-a591-fc375962fe39'
+    API_KEY = 'fb847758-fd50-461c-bd70-59995317b3f7'
     BASE_URL = 'https://kinopoiskapiunofficial.tech/api';
 
-    PREMIER = {
-        name: 'Премьеры',
-        url :`${this.BASE_URL}/v2.2/films/premieres?year=2025&month=OCTOBER `
+    TOP_250_MOVIES = {
+        name: 'Топ 250 фильмов',
+        url :`${this.BASE_URL}/v2.2/films/collections?type=TOP_250_MOVIES&page=1`
     }
     POPULAR_MOVIES = {
         name: 'Популярные фильмы',
@@ -35,8 +35,9 @@ export class Config {
         url: `${this.BASE_URL}/v2.2/films/collections?type=COMICS_THEME&page=1`
     }
 
-    API_URL_SEARCH = `${this.BASE_URL}/v2.1/films/search-by-keyword?keyword=`
-    API_URL_MOVIE_DATA = `${this.BASE_URL}/v2.2/films/`;
+    URL_SEARCH = `${this.BASE_URL}/v2.1/films/search-by-keyword?keyword=`
+    MOVIE_DATA = `${this.BASE_URL}/v2.2/films`;
+
 
 
 }

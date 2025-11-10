@@ -1,5 +1,4 @@
 export class Button {
-
     static create(text, selector, className, data) {
         return new Button(text, selector, className, data).render();
     }
@@ -11,16 +10,23 @@ export class Button {
         this.data = data;
     }
 
-    create() {
+    createButton() {
         this.button = document.createElement('button');
-        this.button.innerText = this.text;
-        if(this.className) this.button.className = this.className;
-        if(this.data) this.button.dataset.id = this.data;
+        this.button.textContent = this.text;
+        if (this.className) {
+            this.button.className = this.className;
+        }
+        if (this.data) {
+            this.button.dataset.id = this.data;
+        }
     }
 
     render() {
-        this.create()
-        document.querySelector(this.selector).appendChild(this.button);
+        this.createButton();
+        const parentElement = document.querySelector(this.selector);
+        if (parentElement) {
+            parentElement.appendChild(this.button);
+        }
         return this.button;
     }
 }

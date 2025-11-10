@@ -81,7 +81,7 @@ body {
 
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Размещаем элементы в колонку */
+    flex-direction: column;
     border-radius: 4px;
     transition: 0.2s;
     position: relative;
@@ -94,7 +94,7 @@ body {
 }
 .card__top {
     position: relative;
-    overflow: hidden; /* Скрываем, что выходит за пределы */
+    overflow: hidden;
 }
 .card__image {
     display: block;
@@ -107,7 +107,7 @@ body {
 .card__image > img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Встраиваем картинку в контейнер card__image */
+    object-fit: contain;
     transition: 0.2s;
 }
 
@@ -154,18 +154,18 @@ body {
 .movie-slider__item{
     display: flex;
     flex-direction: row;
-    width: 1200px; /* Фиксированная ширина */
-    overflow: hidden; /* Скрываем выходящие за границы изображения */
+    width: 1200px;
+    overflow: hidden;
     position: relative;}
 .movie-slider__list{
-    display: flex; /* Располагаем слайды в ряд */
+    display: flex;
     flex-direction: column;
-    width: 100%; /* Делаем ширину в три раза больше (по количеству слайдов) */
+    width: 100%;
     transition: transform 0.5s ease-in-out;
 }
 
 .big{
-    width: 100%; /* Каждый слайд занимает всю ширину контейнера */
+    width: 100%;
     flex-shrink: 0;
     height: 500px;
     flex-direction: row;
@@ -173,4 +173,132 @@ body {
 }
 .big > .card__top{
     flex: 0 0 400px;
+}
+
+
+.wrapper {
+    position: relative;
+    width: 600px;
+    background-color: #ffffff;
+    padding: 20px 10px 5px 20px;
+    border-radius: 10px;
+}
+.container {
+    position: relative;
+    width: 500px;
+    height: 50px;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    outline: none;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    background-color: transparent;
+    pointer-events: none;
+    z-index: 1;
+}
+.slider-track {
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    border-radius: 5px;
+    z-index: 0;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    height: 5px;
+}
+input[type="range"]::-moz-range-track {
+    -moz-appearance: none;
+    height: 5px;
+}
+input[type="range"]::-ms-track {
+    appearance: none;
+    height: 5px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1.7em;
+    width: 1.7em;
+    background-color: #3264fe;
+    cursor: pointer;
+    margin-top: -9px;
+    pointer-events: auto;
+    border-radius: 50%;
+}
+input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    height: 1.7em;
+    width: 1.7em;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #3264fe;
+    pointer-events: auto;
+    border: none;
+}
+input[type="range"]::-ms-thumb {
+    appearance: none;
+    height: 1.7em;
+    width: 1.7em;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #3264fe;
+    pointer-events: auto;
+}
+input[type="range"]:active::-webkit-slider-thumb {
+    background-color: #ffffff;
+    border: 1px solid #3264fe;
+}
+.values {
+    background-color: #3264fe;
+    width: 20%;
+    position: relative;
+    margin: auto;
+    padding: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 200;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+
+/* формируем фон для модального окна */
+.modal {
+    display: none; /* скрыт по умолчанию */
+    /* темный фон при открытии модалки должен быть на всю страницу */
+    position: fixed;
+    z-index: 1; /* поверх всех элементов */
+    left: 0;
+    top: 0;
+    width: 100vw; /* полная ширина */
+    height: 100vh; /* полная высота */
+    background-color: rgba(0,0,0,0.4); /* цвет фона - прозрачный черный */
+}
+
+/* само модальное окно с контентом */
+.modal-content {
+    background-color: #fff;
+    /* окно будет находится по центру по горизонтали и с отступом сверху в 100 px */
+    margin: 100px auto;
+    padding: 20px;
+    width: 50%;
+    font-size: 20px;
+    /* разнесем текст и кнопоку по краям окна */
+    display: flex;
+    justify-content: space-between;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+span {
+    cursor: pointer;
 }

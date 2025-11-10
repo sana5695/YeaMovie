@@ -19,6 +19,7 @@ export class Observer {
         this.state = newState;
         this.notify();
     }
+
     getState() {
         return this.state;
     }

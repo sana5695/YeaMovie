@@ -11,11 +11,11 @@ export class SliderModel extends BaseModel {
         this.slideCount = this.observer.getState().length;
     }
 
-    showPreviousSlide = (index) => {
+    previousSlideIndex = (index) => {
         return (index - 1 + this.slideCount) % this.slideCount;
     }
 
-    showNextSlide = (index) => {
+    nextSlideIndex = (index) => {
         return (index + 1) % this.slideCount;
     }
 }

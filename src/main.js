@@ -1,4 +1,4 @@
-import { Container } from "./core/Container.js";
+import { BuildModules } from "./core/BuildModules.js";
 
 import { ListView } from "./modules/List/ListView.js";
 import { ListModel } from "./modules/List/ListModel.js";
@@ -11,20 +11,25 @@ import { SliderController } from "./modules/Slider/SliderController.js";
 import { FilterView } from "./modules/Filter/FilterView.js";
 import { FilterModel } from "./modules/Filter/FilterModel.js";
 import { FilterController } from "./modules/Filter/FilterController.js";
+
 import { SearchController } from "./modules/Search/SearchController.js";
 import { SearchModel } from "./modules/Search/SearchModel.js";
 import { SearchView } from "./modules/Search/SearchView.js";
 
-const container = new Container();
+const container = new BuildModules();
 const { config } = container;
+
+const main = document.querySelector("main");
+const header = document.querySelector("header");
 
 const search = container.createModule(
     SearchModel,
     SearchController,
     SearchView,
     'search',
+    header,
     'search',
-    [config.URL_SEARCH]
+    []
 );
 
 const leadMovie = container.createModule(
@@ -32,6 +37,7 @@ const leadMovie = container.createModule(
     SliderController,
     SliderView,
     "lead-movie",
+    main,
     "lead-movie",
     [config.TOP_250_MOVIES]
 );
@@ -41,6 +47,7 @@ const listView = container.createModule(
     ListController,
     ListView,
     "movie-list",
+    main,
     "list",
     [config.POPULAR_MOVIES, config.POPULAR_SERIES]
 );
@@ -50,6 +57,7 @@ const sliderView = container.createModule(
     SliderController,
     SliderView,
     "movie-slider",
+    main,
     "slider",
     [config.ZOMBIE_THEME, config.CATASTROPHE_THEME, config.KIDS_ANIMATION_THEME, config.COMICS_THEME]
 );
@@ -59,8 +67,9 @@ const filterView = container.createModule(
     FilterController,
     FilterView,
     "movie-filter",
+    main,
     "filter",
-    [config.MOVIE_DATA]
+    []
 );
 
 search.mount();

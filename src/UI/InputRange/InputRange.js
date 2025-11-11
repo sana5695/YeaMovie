@@ -1,15 +1,15 @@
 export class InputRange {
 
-    static create(name, min, max, step, selector) {
-        return new InputRange(name, min, max, step, selector).render();
+    static create(name, min, max, step, root) {
+        return new InputRange(name, min, max, step, root).render();
     }
 
-    constructor(name, min, max, step, selector) {
+    constructor(name, min, max, root) {
         this.name = name;
         this.min = min;
         this.max = max;
-        this.selector = `.${selector.split(' ')[0]}`;
-        this.step = step
+        this.root = root;
+        this.step = 1
         this.minGap = 0
     }
 
@@ -102,11 +102,9 @@ export class InputRange {
         this.inputName = document.createElement("h3");
         this.inputName.textContent = this.name;
         this.wrapper.appendChild(this.inputName);
-        
-        const parentElement = document.querySelector(this.selector);
-        if (parentElement) {
-            parentElement.appendChild(this.wrapper);
-        }
+
+        this.root.appendChild(this.wrapper);
+
     }
 
     render() {

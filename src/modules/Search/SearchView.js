@@ -1,16 +1,17 @@
 import {BaseView} from "../Base/BaseView.js";
 import {Button} from "../../UI/Button/Button.js";
+import {Input} from "../../UI/Input/Input.js";
 
 export class SearchView extends BaseView {
-    constructor(controller, observer, root, data, modal) {
-        super(controller, observer, root, data, modal);
+    constructor(controller, observer, section ,root, data, modal, config) {
+        super(controller, observer, section ,root, data, modal, config);
     }
 
     bindListeners() {
+        super.bindListeners();
         this.sendButton.addEventListener('click', this.onSearch);
         this.backButton.addEventListener('click', this.onBack);
         this.input.addEventListener('keypress', this.onInput);
-        this.cardListener(this.container)
     }
 
     onSearch = () => {
@@ -30,16 +31,10 @@ export class SearchView extends BaseView {
     }
 
     mount() {
-        document.querySelector('header').appendChild(this.root)
-
-        this.input = document.createElement("input");
-        this.input.type = "text";
-        this.input.setAttribute("placeholder", "Search");
-        this.root.appendChild(this.input);
-
-
-        this.sendButton = Button.create('Поиск', this.root.className)
-        this.backButton = Button.create('Назад', this.root.className)
+        super.mount()
+        this.input = Input.create('Поиск', this.section)
+        this.sendButton = Button.create('Поиск', this.root)
+        this.backButton = Button.create('Назад', this.root)
         this.backButton.style.display = 'none';
 
         this.bindListeners()

@@ -1,28 +1,22 @@
 export class Select {
-    static create(name, options, selector, className, data, key) {
-        return new Select(name, options, selector, className, data, key).render();
+    static create(name, options, root, className, data) {
+        return new Select(name, options, root, className, data).render();
     }
 
-    constructor(name, options, selector, className, data, key) {
+    constructor(name, options, root, className, data) {
         this.name = name;
         this.options = options || [];
-        this.selector = `.${selector.split(' ')[0]}`;
+        this.root = root;
         this.className = className;
         this.data = data;
-        this.key = key;
-        this.title = document.createElement('h3');
-        this.title.textContent = name;
     }
 
     createSelectElement() {
         this.select = document.createElement('select');
         this.select.name = this.name;
-        if (this.className) {
-            this.select.className = this.className;
-        }
-        if (this.data) {
-            this.select.dataset.id = this.data;
-        }
+        if (this.className) this.select.className = this.className;
+        if (this.data) this.select.dataset.id = this.data;
+
         this.container.appendChild(this.select);
         
         const defaultOption = document.createElement('option');
@@ -33,17 +27,20 @@ export class Select {
 
     createContainer() {
         this.container = document.createElement('div');
-        document.querySelector(this.selector).appendChild(this.container);
+        this.root.appendChild(this.container);
+
+        this.title = document.createElement('h3');
+        this.title.textContent = name;
         this.container.appendChild(this.title);
     }
 
     createOptions() {
         this.options.forEach((option) => {
-            const {id, [this.key]: text} = option;
+            const [id, text] = Object.keys(option);
             if (!text) return
             const optionElem = document.createElement('option');
-            optionElem.textContent = text;
-            optionElem.value = id;
+            optionElem.textContent = option[text];
+            optionElem.value = option[id];
             this.select.appendChild(optionElem);
         })
     }

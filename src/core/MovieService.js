@@ -1,9 +1,6 @@
 export class MovieService {
     constructor(config) {
         this.config = config;
-
-
-
     }
 
     async fetchData(url) {

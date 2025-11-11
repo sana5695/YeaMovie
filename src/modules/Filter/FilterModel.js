@@ -6,6 +6,6 @@ export class FilterModel extends BaseModel {
     }
 
     async getFilters() {
-        return await this.movieService.getFilters();
+        return await this.movieService.getFilters()
     }
 }

@@ -1,33 +1,32 @@
 import {CardFactory} from "../../core/CardFactory.js";
 import {Button} from "../../UI/Button/Button.js";
+import {Container} from "../../UI/Container/Container.js";
 
 export class BaseView {
-    constructor(controller, observer, root, data, modal) {
-        this.root = document.createElement("section");
-        this.root.classList.add(root);
-
+    constructor(controller, observer, section ,root, data, modal, config) {
+        this.root = root
         this.observer = observer;
         this.controller = controller;
         this.data = data;
         this.modal = modal;
         this.size = 'small';
-
-
-        this.buttonMap = new Map();
-
-        this.container = document.createElement('div');
-        this.container.classList.add(`${this.root.className}__container`);
-
-        this.navigation = document.createElement('nav');
-        this.navigation.className = `${this.root.className}__nav`;
+        this.config = config;
+        this.sectionClassName = section;
 
         this.observer.subscribe((movies) => this.update(movies));
     }
 
-    createNavButtons(buttons, selector, className) {
-        if (buttons.length > 1) {
-            for (let buttonData of buttons) {
-                const button = Button.create(buttonData.name, selector, className);
+    bindListeners() {
+        if (this.data.length > 1) this.navListener(this.navigation);
+        this.cardListener(this.container);
+    }
+
+    createNavButtons() {
+        if (this.data.length > 1) {
+            this.buttonMap = new Map();
+            this.navigation = Container.create('nav', this.section, `${this.sectionClassName}__nav`)
+            for (let buttonData of this.data) {
+                const button = Button.create(buttonData.name, this.navigation);
                 this.buttonMap.set(button, buttonData.url);
             }
         }
@@ -35,7 +34,7 @@ export class BaseView {
 
     navListener(location) {
         location.addEventListener('click', event => {
-            this.onLoadMoviesClick(this.buttonMap.get(event.target));
+            this.onLoadMovies(this.buttonMap.get(event.target));
         })
     }
 
@@ -50,8 +49,8 @@ export class BaseView {
         });
     }
 
-    onLoadMoviesClick = (url) => {
-        this.controller.getMovies(url)
+    onLoadMovies = (url) => {
+        if (url) this.controller.getMovies(url)
     }
 
     update(movies) {
@@ -63,5 +62,12 @@ export class BaseView {
             return CardFactory.createCard(movie, this.size).render();
         });
         this.container.innerHTML = movieCardsHtml.join('');
+    }
+
+    mount() {
+        this.section = Container.create('section', this.root, this.sectionClassName);
+        this.container = Container.create('div', this.section, `${this.sectionClassName}__container`);
+        this.createNavButtons();
+        this.onLoadMovies(this.data[0]?.url)
     }
 }

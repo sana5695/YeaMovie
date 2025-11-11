@@ -26,9 +26,9 @@ const search = container.createModule(
     SearchModel,
     SearchController,
     SearchView,
-    'search',
+    'search--result',
     header,
-    'search',
+    'search--result',
     []
 );
 
@@ -39,7 +39,8 @@ const leadMovie = container.createModule(
     "lead-movie",
     main,
     "lead-movie",
-    [config.TOP_250_MOVIES]
+    [config.TOP_250_MOVIES],
+    config.TYPE_CARD.large
 );
 
 const listView = container.createModule(
@@ -49,7 +50,8 @@ const listView = container.createModule(
     "movie-list",
     main,
     "list",
-    [config.POPULAR_MOVIES, config.POPULAR_SERIES]
+    [config.POPULAR_MOVIES, config.POPULAR_SERIES],
+    config.TYPE_CARD.small
 );
 
 const sliderView = container.createModule(
@@ -59,7 +61,8 @@ const sliderView = container.createModule(
     "movie-slider",
     main,
     "slider",
-    [config.ZOMBIE_THEME, config.CATASTROPHE_THEME, config.KIDS_ANIMATION_THEME, config.COMICS_THEME]
+    [config.ZOMBIE_THEME, config.CATASTROPHE_THEME, config.KIDS_ANIMATION_THEME, config.COMICS_THEME],
+    config.TYPE_CARD.large
 );
 
 const filterView = container.createModule(
@@ -69,7 +72,8 @@ const filterView = container.createModule(
     "movie-filter",
     main,
     "filter",
-    []
+    [],
+    config.TYPE_CARD.small
 );
 
 search.mount();

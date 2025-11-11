@@ -1,8 +1,8 @@
 import {BaseModel} from "../Base/BaseModel.js";
 
 export class SearchModel extends BaseModel{
-    constructor(movieService, observer, config) {
-        super(movieService, observer, config);
+    constructor(options) {
+        super(options);
     }
 
     async search(text) {

@@ -1,24 +1,22 @@
 import {BaseView} from "../Base/BaseView.js";
 import {Button} from "../../UI/Button/Button.js";
 import {Input} from "../../UI/Input/Input.js";
+import {Container} from "../../UI/Container/Container.js";
+import {Link} from "../../UI/Link/Link.js";
 
 export class SearchView extends BaseView {
-    constructor(controller, observer, section ,root, data, modal, config) {
-        super(controller, observer, section ,root, data, modal, config);
+    constructor(options) {
+        super(options);
     }
 
     bindListeners() {
         super.bindListeners();
-        this.sendButton.addEventListener('click', this.onSearch);
-        this.backButton.addEventListener('click', this.onBack);
         this.input.addEventListener('keypress', this.onInput);
     }
 
     onSearch = () => {
         this.controller.handleSearch(this.input.value);
         this.backButton.style.display = 'block';
-        document.querySelector('main').innerHTML = ''
-        document.querySelector('main').appendChild(this.container);
     }
 
     onInput = (e) => {
@@ -30,13 +28,47 @@ export class SearchView extends BaseView {
         document.location.reload()
     }
 
-    mount() {
-        super.mount()
-        this.input = Input.create('Поиск', this.section)
-        this.sendButton = Button.create('Поиск', this.root)
-        this.backButton = Button.create('Назад', this.root)
+    renderSearch() {
+        this.searchContainer = Container.create({
+            tag: 'div',
+            root: this.root,
+            className: [`search`]
+        });
+
+        Link.create({
+            text: '🎬 YeaMovie',
+            href: "index.html",
+            root: this.searchContainer,
+            className: ['logo']
+        });
+
+        this.input = Input.create({
+            text: 'Поиск',
+            root: this.searchContainer,
+            className: ['search--input'],
+            data: 'search--input'
+        });
+
+        Button.create({
+            text: 'Поиск',
+            root: this.searchContainer,
+            listener: this.onSearch,
+            className: ['button']
+        })
+
+        this.backButton = Button.create({
+            text: 'Назад',
+            root: this.searchContainer,
+            listener: this.onBack,
+            className: ['button']
+        })
         this.backButton.style.display = 'none';
 
+    }
+
+    mount() {
+        this.renderSearch()
+        super.mount()
         this.bindListeners()
     }
 }

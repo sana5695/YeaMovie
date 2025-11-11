@@ -5,25 +5,15 @@ import {Button} from "../../UI/Button/Button.js";
 import {Container} from "../../UI/Container/Container.js";
 
 export class FilterView extends BaseView {
-    constructor(controller, observer, section ,root, data, modal, config) {
-        super(controller, observer, section ,root, data, modal, config);
+    constructor(options) {
+        super(options);
     }
 
-    bindListeners() {
-        super.bindListeners();
-        this.sendButton.addEventListener('click', () => this.onLoadMovies(this.config.MOVIE_DATA + this.getParams()))
-    }
-
-    getParams(){
+    getParams() {
         const params = [];
 
-        if (this.countries.value !== '0') {
-            params.push(`countries=${this.countries.value}`);
-        }
-
-        if (this.genres.value !== '0') {
-            params.push(`genres=${this.genres.value}`);
-        }
+        if (this.countries.value !== '0') params.push(`countries=${this.countries.value}`);
+        if (this.genres.value !== '0') params.push(`genres=${this.genres.value}`);
 
         const [ratingFrom, ratingTo] = this.rating;
         const [yearFrom, yearTo] = this.year;
@@ -35,29 +25,68 @@ export class FilterView extends BaseView {
             `yearTo=${yearTo.value}`
         );
 
-        return `?${params.join('&')}`;
+        return `${this.config.MOVIE_DATA}?${params.join('&')}`;
     }
 
-    async getFilters(){
+    async getFilters() {
         this.filters = await this.controller.getFilters();
         this.createFilters()
     }
 
-    createFilters(){
+    createFilters() {
         this.countriesData = this.filters.countries || [];
         this.genresData = this.filters.genres || [];
 
-        this.filtersContainer = Container.create('div',this.section)
-        this.genres = Select.create('Жанр', this.genresData, this.filtersContainer);
-        this.countries = Select.create('Страна', this.countriesData, this.filtersContainer);
-        this.year = InputRange.create('Год', 1920, 2025, this.filtersContainer);
-        this.rating = InputRange.create('Рейтинг', 0, 10, this.filtersContainer);
+
+        this.genres = Select.create({
+            ext: 'Жанр',
+            optionsSelect: this.genresData,
+            root: this.filtersContainer
+        });
+
+        this.countries = Select.create({
+            text: 'Страна',
+            optionsSelect: this.countriesData,
+            root: this.filtersContainer
+        });
+
+        this.year = InputRange.create(
+            'Год',
+            1920,
+            2025,
+            this.filtersContainer);
+
+        this.rating = InputRange.create(
+            'Рейтинг',
+            0,
+            10,
+            this.filtersContainer);
     }
 
     mount() {
-        super.mount()
-        this.sendButton = Button.create('Отправить', this.section);
+        this.section = Container.create({
+            tag: 'section',
+            root: this.root,
+            className: [this.sectionClassName]
+        });
+
+        this.filtersContainer = Container.create({
+            tag: 'div',
+            root: this.section,
+            className: [`${this.sectionClassName}__filters`]
+        });
+        Button.create({
+            text: 'Отправить',
+            root: this.filtersContainer,
+            listener: () => this.onLoadMovies(this.getParams()),
+            className: ['button']
+        })
         this.getFilters()
+        this.container = Container.create({
+            tag: 'div',
+            root: this.section,
+            className: [`${this.sectionClassName}__container`]
+        });
         this.bindListeners();
     }
 }

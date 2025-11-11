@@ -3,7 +3,17 @@ import {Button} from "../../UI/Button/Button.js";
 import {Container} from "../../UI/Container/Container.js";
 
 export class BaseView {
-    constructor(controller, observer, section ,root, data, modal, config) {
+    constructor(options) {
+        const {
+            controller,
+            observer,
+            section,
+            root,
+            data,
+            modal,
+            config
+        } = options;
+
         this.root = root
         this.observer = observer;
         this.controller = controller;
@@ -17,25 +27,44 @@ export class BaseView {
     }
 
     bindListeners() {
-        if (this.data.length > 1) this.navListener(this.navigation);
         this.cardListener(this.container);
     }
 
     createNavButtons() {
         if (this.data.length > 1) {
             this.buttonMap = new Map();
-            this.navigation = Container.create('nav', this.section, `${this.sectionClassName}__nav`)
-            for (let buttonData of this.data) {
-                const button = Button.create(buttonData.name, this.navigation);
+
+            this.navigation = Container.create({
+                tag: 'nav',
+                root: this.section,
+                className: [`${this.sectionClassName}__nav`]
+            })
+
+            this.data.forEach((buttonData, index) => {
+                const classes = ['button', 'nav__button'];
+                if (index === 0) {
+                    classes.push('active');
+                }
+                const button = Button.create({
+                    text: buttonData.name,
+                    root: this.navigation,
+                    listener: (event) => this.navListener(event),
+                    className: classes
+                });
                 this.buttonMap.set(button, buttonData.url);
-            }
+            });
         }
     }
 
-    navListener(location) {
-        location.addEventListener('click', event => {
+    navListener(event) {
+        if (event.target !== this.navigation.querySelector('.active')) {
+            const active = event.target
+            this.buttonMap.keys().forEach(button => {
+                if (button === active) button.classList.add('active');
+                else button.classList.remove('active');
+            })
             this.onLoadMovies(this.buttonMap.get(event.target));
-        })
+        }
     }
 
     cardListener(location) {
@@ -54,20 +83,30 @@ export class BaseView {
     }
 
     update(movies) {
-            this.render(movies);
+        this.render(movies);
     }
 
     render(movies) {
-        const movieCardsHtml = movies.map(movie => {
-            return CardFactory.createCard(movie, this.size).render();
+        this.container.innerHTML = '';
+        movies.forEach(movie => {
+            //CardFactory.createCard(movie, this.size, this.container).render();
         });
-        this.container.innerHTML = movieCardsHtml.join('');
     }
 
     mount() {
-        this.section = Container.create('section', this.root, this.sectionClassName);
-        this.container = Container.create('div', this.section, `${this.sectionClassName}__container`);
+        this.section = Container.create({
+            tag: 'section',
+            root: this.root,
+            className: [this.sectionClassName]
+        });
+
         this.createNavButtons();
+        this.container = Container.create({
+            tag: 'div',
+            root: this.section,
+            className: [`${this.sectionClassName}__container`]
+        });
+
         this.onLoadMovies(this.data[0]?.url)
     }
 }

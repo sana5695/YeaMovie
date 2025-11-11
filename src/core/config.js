@@ -1,5 +1,6 @@
 export class Config {
-    API_KEY = 'fb847758-fd50-461c-bd70-59995317b3f7'
+    //API_KEY = 'fb847758-fd50-461c-bd70-59995317b3f7'
+    API_KEY = 'd6eecabd-8d16-47f7-a591-fc375962fe39'
     BASE_URL = 'https://kinopoiskapiunofficial.tech/api';
 
     TOP_250_MOVIES = {
@@ -37,6 +38,12 @@ export class Config {
 
     URL_SEARCH = `${this.BASE_URL}/v2.1/films/search-by-keyword?keyword=`
     MOVIE_DATA = `${this.BASE_URL}/v2.2/films`;
+
+    TYPE_CARD = {
+        small: 'small',
+        large: 'big',
+        screenshots: 'screenshots',
+    }
 
 
 

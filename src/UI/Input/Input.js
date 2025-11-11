@@ -1,26 +1,22 @@
-export class Input {
-    static create(text, root, className, data) {
-        return new Input(text, root, className, data).render();
+import {BaseUi} from "../Base/BaseUi.js";
+
+export class Input extends BaseUi {
+    static create(options) {
+        return new Input(options).render();
     }
 
-    constructor(text, root, className, data) {
-        this.text = text;
-        this.root = root;
-        this.className = className;
-        this.data = data;
+    constructor(options) {
+        super(options);
     }
 
-    createButton() {
-        this.input = document.createElement("input");
-        this.input.type = "text";
-        this.input.setAttribute("placeholder", this.text);
-        if (this.className) this.input.className = this.className;
-        if (this.data) this.input.dataset.id = this.data;
+    createElem() {
+        this.elem = document.createElement('input');
     }
 
-    render() {
-        this.createButton();
-        this.root.appendChild(this.input);
-        return this.input;
+    createOptions() {
+        this.elem.type = "text";
+        this.elem.setAttribute("placeholder", this.text);
+        if (this.className) this.elem.classList.add(...this.className)
+        if (this.data) this.elem.id = this.data;
     }
 }

@@ -3,18 +3,12 @@ import {Button} from "../../UI/Button/Button.js";
 import {Container} from "../../UI/Container/Container.js";
 
 export class SliderView extends BaseView {
-    constructor(controller, observer, section ,root, data, modal, config) {
-        super(controller, observer, section ,root, data, modal, config);
+    constructor(options) {
+        super(options);
         this.size = 'big';
         this.slideIndex = 0;
         this.slides = [];
         this.observer.subscribe(() => this.updateSlides());
-    }
-
-    bindListeners() {
-        super.bindListeners();
-        this.prevButton.addEventListener('click', () => this.onChangeSlide('Prev'));
-        this.nextButton.addEventListener('click', () => this.onChangeSlide('Next'));
     }
 
     onChangeSlide = (direction) => {
@@ -35,10 +29,25 @@ export class SliderView extends BaseView {
         this.updateSlider();
     }
 
-    createArrows(){
-        this.arrowsContainer = Container.create('div',this.section)
-        this.prevButton = Button.create('<', this.arrowsContainer);
-        this.nextButton = Button.create('>', this.arrowsContainer);
+    createArrows() {
+        this.arrowsContainer = Container.create({
+            tag: 'div',
+            root: this.section,
+            className: ['arrows-container']
+        })
+        Button.create({
+            text: '<',
+            root: this.arrowsContainer,
+            listener: () => this.onChangeSlide('Prev'),
+            className: ['arrow']
+        })
+        ;
+        Button.create({
+            text: '>',
+            root: this.arrowsContainer,
+            listener: () => this.onChangeSlide('Next'),
+            className: ['arrow']
+        });
     }
 
     mount() {

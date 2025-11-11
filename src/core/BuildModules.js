@@ -1,7 +1,7 @@
 import { MovieService } from "./MovieService.js";
 import { Observer } from "./Observer.js";
 import { Config } from "./config.js";
-import { Modal } from "../UI/Modal/Modal.js";
+import { Modal } from "../modules/Modal/Modal.js";
 
 export class BuildModules {
     constructor() {
@@ -18,13 +18,13 @@ export class BuildModules {
         return this.observers[key];
     }
 
-    createModule(ModelClass, ControllerClass, ViewClass, section, root, observerKey, data = []) {
+    createModule(ModelClass, ControllerClass, ViewClass, section, root, observerKey, data = [], type) {
         const movieService = this.movieService;
         const modal = this.modal;
         const config = this.config;
         const observer = this.getObserver(observerKey);
-        const model = new ModelClass(movieService, observer, config);
+        const model = new ModelClass({movieService, observer, config});
         const controller = new ControllerClass(model);
-        return new ViewClass(controller, observer, section, root, data, modal, config);
+        return new ViewClass({controller, observer, section, root, data, modal, config, type});
     }
 }

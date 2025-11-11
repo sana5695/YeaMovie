@@ -1,8 +1,8 @@
 import {BaseUi} from "../Base/BaseUi.js";
 
-export class Container extends BaseUi {
+export class Text extends BaseUi {
     static create(options) {
-        return new Container(options).render();
+        return new Text(options).render();
     }
 
     constructor(options) {

@@ -1,8 +1,8 @@
 import {BaseModel} from "../Base/BaseModel.js";
 
 export class SliderModel extends BaseModel {
-    constructor(movieService, observer, config) {
-        super(movieService, observer, config);
+    constructor(options) {
+        super(options);
         this.slideCount = 0;
         this.observer.subscribe(() => this.updateSlideCount());
     }

@@ -1,5 +1,6 @@
 export class BaseModel {
-    constructor(movieService, observer, config) {
+    constructor(options) {
+        const {movieService, observer, config} = options;
         this.movieService = movieService;
         this.observer = observer;
         this.config = config;

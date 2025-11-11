@@ -1,25 +1,25 @@
-export class Button {
-    static create(text, root, className, data) {
-        return new Button(text, root, className, data).render();
+import {BaseUi} from "../Base/BaseUi.js";
+
+export class Button extends BaseUi{
+    static create(options) {
+        return new Button(options).render();
     }
 
-    constructor(text, root, className, data) {
-        this.text = text;
-        this.root = root;
-        this.className = className;
-        this.data = data;
+    constructor(options) {
+        super(options);
+        console.log(options);
     }
 
-    createButton() {
-        this.button = document.createElement('button');
-        this.button.textContent = this.text;
-        if (this.className) this.button.className = this.className;
-        if (this.data) this.button.dataset.id = this.data;
+    createElem() {
+        this.elem = document.createElement('button');
     }
 
-    render() {
-        this.createButton();
-        this.root.appendChild(this.button);
-        return this.button;
+    createOptions() {
+        super.createOptions();
+        if (this.listener) this.bindListeners(this.listener);
+    }
+
+    bindListeners(listener) {
+        this.elem.addEventListener('click', listener);
     }
 }

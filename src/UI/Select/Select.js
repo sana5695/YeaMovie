@@ -1,28 +1,16 @@
-export class Select {
-    static create(name, options, root, className, data) {
-        return new Select(name, options, root, className, data).render();
+import {BaseUi} from "../Base/BaseUi.js";
+
+export class Select extends BaseUi {
+    static create(options) {
+        return new Select(options).render();
     }
 
-    constructor(name, options, root, className, data) {
-        this.name = name;
-        this.options = options || [];
-        this.root = root;
-        this.className = className;
-        this.data = data;
+    constructor(options) {
+        super(options);
     }
 
-    createSelectElement() {
-        this.select = document.createElement('select');
-        this.select.name = this.name;
-        if (this.className) this.select.className = this.className;
-        if (this.data) this.select.dataset.id = this.data;
-
-        this.container.appendChild(this.select);
-        
-        const defaultOption = document.createElement('option');
-        defaultOption.textContent = 'Не выбрано';
-        defaultOption.value = '0';
-        this.select.appendChild(defaultOption);
+    createElem() {
+        this.elem = document.createElement('select');
     }
 
     createContainer() {
@@ -30,14 +18,27 @@ export class Select {
         this.root.appendChild(this.container);
 
         this.title = document.createElement('h3');
-        this.title.textContent = name;
+        this.title.textContent = this.name;
         this.container.appendChild(this.title);
     }
 
-    createOptions() {
-        this.options.forEach((option) => {
-            const [id, text] = Object.keys(option);
-            if (!text) return
+    createOptions(){
+        this.select.name = this.text;
+        if (this.className) this.select.classList.add(...this.className)
+        if (this.data) this.select.dataset.id = this.data;
+
+        this.container.appendChild(this.select);
+
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent = 'Не выбрано';
+        defaultOption.value = '0';
+        this.select.appendChild(defaultOption);
+    }
+
+    createSelectOptions() {
+        const [id, text] = Object.keys(this.optionsSelect[0]);
+        this.optionsSelect.forEach((option) => {
+            if (!option[text]) return
             const optionElem = document.createElement('option');
             optionElem.textContent = option[text];
             optionElem.value = option[id];
@@ -47,8 +48,8 @@ export class Select {
 
     render() {
         this.createContainer()
-        this.createSelectElement()
-        this.createOptions();
+        this.createElem()
+        this.createSelectOptions();
         return this.select;
     }
 }

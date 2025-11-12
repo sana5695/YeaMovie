@@ -11,7 +11,7 @@ export class FilterView extends BaseView {
 
     getParams() {
         const params = [];
-
+        console.log(this.countries)
         if (this.countries.value !== '0') params.push(`countries=${this.countries.value}`);
         if (this.genres.value !== '0') params.push(`genres=${this.genres.value}`);
 
@@ -50,6 +50,8 @@ export class FilterView extends BaseView {
             root: this.filtersContainer
         });
 
+        console.log(this.countries);
+
         this.year = InputRange.create(
             'Год',
             1920,
@@ -63,30 +65,18 @@ export class FilterView extends BaseView {
             this.filtersContainer);
     }
 
-    mount() {
-        this.section = Container.create({
-            tag: 'section',
-            root: this.root,
-            className: [this.sectionClassName]
-        });
-
+    mount(root, parentClassName, listener) {
         this.filtersContainer = Container.create({
             tag: 'div',
-            root: this.section,
-            className: [`${this.sectionClassName}__filters`]
+            root: root,
+            className: [this.className,`${parentClassName}__filters`]
         });
         Button.create({
             text: 'Отправить',
             root: this.filtersContainer,
-            listener: () => this.onLoadMovies(this.getParams()),
+            listener: () => listener(this.getParams()),
             className: ['button']
         })
         this.getFilters()
-        this.container = Container.create({
-            tag: 'div',
-            root: this.section,
-            className: [`${this.sectionClassName}__container`]
-        });
-        this.bindListeners();
     }
 }

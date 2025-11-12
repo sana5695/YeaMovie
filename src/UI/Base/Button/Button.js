@@ -7,7 +7,6 @@ export class Button extends BaseUi{
 
     constructor(options) {
         super(options);
-        console.log(options);
     }
 
     createElem() {

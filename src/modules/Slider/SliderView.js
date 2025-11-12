@@ -5,15 +5,15 @@ import {Container} from "../../UI/Base/Container/Container.js";
 export class SliderView extends BaseView {
     constructor(options) {
         super(options);
-        this.size = 'big';
+        this.type = this.type || 'big';
         this.slideIndex = 0;
         this.slides = [];
         this.observer.subscribe(() => this.updateSlides());
     }
 
-    onChangeSlide = (direction) => {
-        if (direction === 'Prev') this.slideIndex = this.controller.handlePreviousSlide(this.slideIndex);
-        else if (direction === 'Next') this.slideIndex = this.controller.handleNextSlide(this.slideIndex);
+    updateSlides() {
+        this.slides = Array.from(this.container.querySelectorAll('.card'));
+        this.slideIndex = 0;
         this.updateSlider();
     }
 
@@ -23,36 +23,54 @@ export class SliderView extends BaseView {
         });
     }
 
-    updateSlides() {
-        this.slides = Array.from(this.container.querySelectorAll('.card'));
-        this.slideIndex = 0;
+    onChangeSlide(direction) {
+        if (direction === 'Prev')
+            this.slideIndex = this.controller.handlePreviousSlide(this.slideIndex);
+        else
+            this.slideIndex = this.controller.handleNextSlide(this.slideIndex);
         this.updateSlider();
     }
 
-    createArrows() {
-        this.arrowsContainer = Container.create({
+    createArrows(root) {
+        this.arrows = Container.create({
             tag: 'div',
-            root: this.section,
+            root: root,
             className: ['arrows-container']
-        })
+        });
+
         Button.create({
             text: '<',
-            root: this.arrowsContainer,
+            root: this.arrows,
             listener: () => this.onChangeSlide('Prev'),
             className: ['arrow']
-        })
-        ;
+        });
+
         Button.create({
             text: '>',
-            root: this.arrowsContainer,
+            root: this.arrows,
             listener: () => this.onChangeSlide('Next'),
             className: ['arrow']
         });
     }
 
-    mount() {
-        super.mount()
-        this.createArrows()
-        this.bindListeners();
+    mount(root,parentClassName) {
+        this.arrows = Container.create({
+            tag: 'div',
+            root: root,
+            className: ['slider-container']
+        });
+        Button.create({
+            text: '<',
+            root: this.arrows,
+            listener: () => this.onChangeSlide('Prev'),
+            className: ['arrow']
+        });
+        super.mount(this.arrows ,parentClassName);
+        Button.create({
+            text: '>',
+            root: this.arrows,
+            listener: () => this.onChangeSlide('Next'),
+            className: ['arrow']
+        });
     }
 }

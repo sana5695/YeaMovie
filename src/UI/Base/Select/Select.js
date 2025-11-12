@@ -50,6 +50,6 @@ export class Select extends BaseUi {
         this.createElem()
         this.createOptions()
         this.createSelectOptions();
-        return this.select;
+        return this.elem;
     }
 }

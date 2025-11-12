@@ -1,49 +1,29 @@
+import {CardFactory} from "../../core/CardFactory.js";
+import {MovieService} from "../../core/MovieService.js";
+import {Config} from "../../core/config.js";
+
 export class Modal {
-    constructor() {
+    constructor(screenshots) {
         this.modal = document.createElement('div');
         this.modal.classList.add('modal');
         this.modalContent = document.createElement('div');
         this.modalContent.classList.add('modal-content');
         this.modal.appendChild(this.modalContent);
-
         document.body.appendChild(this.modal);
+        this.screenshots = screenshots;
         this.bindListeners();
+        this.movieService = new MovieService(new Config())
     }
 
-    openModal(movie, screenshots) {
+    async openModal(movie, screenshots) {
         if (!movie) {
             return;
         }
 
-        const title = movie.title || 'Без названия';
-        const description = movie.description || '';
-        const year = movie.year?.toString() || '';
-        const genres = movie.genres || '';
-        const posterUrl = movie.poster || '';
+        CardFactory.createCard(movie, 'big', this.modal).render()
+        this.screenshots.mount(this.modal, 'modal')
+        this.screenshots.controller.setMovies(await this.getMovieScreenshots(movie.id));
 
-        this.modalContent.innerHTML = `
-            <div>
-                <div class="card__top">
-                    <div class="card__image">
-                        <img
-                            loading="lazy"
-                            class="movie__cover-inner_img"
-                            src="${posterUrl}"
-                            alt="${title}"
-                        />
-                    </div>
-                </div>
-                <div class="movie__info">
-                    <h2 class="movie__info_title">${title}</h2>
-                    <p class="movie__info_description">${description}</p>
-                    <div class="movie__info__subtitle">
-                        <p class="movie__info_year">${year}</p>
-                        <p class="movie__info_category">${genres}</p>
-                    </div>
-                </div>
-            </div>
-            ${screenshots && screenshots.length > 0 ? '<div class="screenshots"></div>' : ''}
-        `;
 
         const screenshotsContainer = this.modalContent.querySelector('.screenshots');
         if (screenshotsContainer && screenshots && Array.isArray(screenshots)) {
@@ -56,8 +36,25 @@ export class Modal {
                 }
             });
         }
-
         this.modal.style.display = "block";
+    }
+
+    async getMovieScreenshots(id) {
+        const rawMovie = await this.movieService.getMovieScreenshots(id)
+        return (rawMovie.items.map(movie => movie.previewUrl))
+    }
+
+    formatMovies(rawMovies) {
+        return rawMovies.map(movie => ({
+            title: movie.nameRu,
+            genres: movie.genres.map(item => item.genre).join(', '),
+            rating: movie.ratingKinopoisk || movie.rating,
+            poster: movie.posterUrlPreview,
+            description: movie.description,
+            coverUrl: movie.posterUrlPreview,
+            year: movie.year,
+            id: movie.kinopoiskId || movie.filmId,
+        }));
     }
 
     bindListeners() {
@@ -71,6 +68,7 @@ export class Modal {
     }
 
     closeModal() {
+        this.modal.innerHTML = '';
         this.modal.style.display = "none";
     }
 }

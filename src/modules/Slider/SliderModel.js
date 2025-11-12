@@ -8,15 +8,15 @@ export class SliderModel extends BaseModel {
     }
 
     updateSlideCount() {
-        this.slideCount = this.observer.getState().length;
+        const movies = this.observer.getState() || [];
+        this.slideCount = movies.length;
     }
 
-    previousSlideIndex = (index) => {
+    previousSlideIndex(index) {
         return (index - 1 + this.slideCount) % this.slideCount;
     }
 
-    nextSlideIndex = (index) => {
+    nextSlideIndex(index) {
         return (index + 1) % this.slideCount;
     }
 }
-

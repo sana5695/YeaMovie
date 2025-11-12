@@ -5,6 +5,10 @@ export class Img extends BaseUi {
         return new Img(options).render();
     }
 
+    static elem(options) {
+        return new Img(options).getElement();
+    }
+
     constructor(options) {
         super(options);
     }
@@ -18,5 +22,11 @@ export class Img extends BaseUi {
         this.elem.alt = this.alt;
         this.elem.src = this.src;
         this.elem.loading = 'lazy';
+    }
+
+    getElement() {
+        this.createElem()
+        this.createOptions()
+        return this.elem;
     }
 }

@@ -2,8 +2,9 @@ export class BaseUi {
     static create(options) {
     }
 
+
     constructor(options) {
-        const {text, root, listener, className, data, tag, href, src, alt, optionsSelect} = options;
+        const {text, root, listener, className, data, tag, href, src, alt, optionsSelect, pospend = 'appendChild'} = options;
         this.text = text;
         this.root = root;
         this.className = className;
@@ -14,6 +15,7 @@ export class BaseUi {
         this.src = src;
         this.alt = alt;
         this.optionsSelect = optionsSelect || [];
+        this.pospend = pospend;
     }
 
     createElem() {
@@ -29,7 +31,7 @@ export class BaseUi {
     render() {
         this.createElem();
         this.createOptions()
-        this.root.appendChild(this.elem);
+        this.root[this.pospend](this.elem);
         return this.elem;
     }
 }

@@ -16,13 +16,13 @@ import { SearchController } from "./modules/Search/SearchController.js";
 import { SearchModel } from "./modules/Search/SearchModel.js";
 import { SearchView } from "./modules/Search/SearchView.js";
 
-const container = new BuildModules();
-const { config } = container;
+const buildModules = new BuildModules();
+const { config } = buildModules;
 
 const main = document.querySelector("main");
 const header = document.querySelector("header");
 
-const search = container.createModule(
+const search = buildModules.createModule(
     SearchModel,
     SearchController,
     SearchView,
@@ -32,7 +32,7 @@ const search = container.createModule(
     []
 );
 
-const leadMovie = container.createModule(
+const leadMovie = buildModules.createModule(
     SliderModel,
     SliderController,
     SliderView,
@@ -43,7 +43,7 @@ const leadMovie = container.createModule(
     config.TYPE_CARD.large
 );
 
-const listView = container.createModule(
+const listView = buildModules.createModule(
     ListModel,
     ListController,
     ListView,
@@ -54,7 +54,7 @@ const listView = container.createModule(
     config.TYPE_CARD.small
 );
 
-const sliderView = container.createModule(
+const sliderView = buildModules.createModule(
     SliderModel,
     SliderController,
     SliderView,
@@ -65,7 +65,7 @@ const sliderView = container.createModule(
     config.TYPE_CARD.large
 );
 
-const filterView = container.createModule(
+const filterView = buildModules.createModule(
     FilterModel,
     FilterController,
     FilterView,
@@ -76,9 +76,9 @@ const filterView = container.createModule(
     config.TYPE_CARD.small
 );
 
-search.mount();
+//search.mount();
 leadMovie.mount();
-listView.mount();
-sliderView.mount();
-filterView.mount();
+//listView.mount();
+//sliderView.mount();
+//filterView.mount();
 

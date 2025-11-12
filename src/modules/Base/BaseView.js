@@ -1,6 +1,6 @@
+import {Button} from "../../UI/Base/Button/Button.js";
+import {Container} from "../../UI/Base/Container/Container.js";
 import {CardFactory} from "../../core/CardFactory.js";
-import {Button} from "../../UI/Button/Button.js";
-import {Container} from "../../UI/Container/Container.js";
 
 export class BaseView {
     constructor(options) {
@@ -89,7 +89,7 @@ export class BaseView {
     render(movies) {
         this.container.innerHTML = '';
         movies.forEach(movie => {
-            //CardFactory.createCard(movie, this.size, this.container).render();
+            CardFactory.createCard(movie, this.size, this.container).render();
         });
     }
 

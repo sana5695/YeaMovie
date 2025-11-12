@@ -1,6 +1,5 @@
-/* ===== CSS VARIABLES ===== */
 :root {
-    /* Colors */
+
     --primary-bg: #AADDFF;
     --secondary-bg: #f8f9fa;
     --card-bg: #ffffff;
@@ -15,7 +14,6 @@
     --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
     --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.2);
 
-    /* Typography */
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -25,7 +23,6 @@
     --font-size-2xl: 1.5rem;
     --font-size-3xl: 1.875rem;
 
-    /* Spacing */
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 0.75rem;
@@ -36,29 +33,24 @@
     --space-10: 2.5rem;
     --space-12: 3rem;
 
-    /* Border radius */
     --radius-sm: 4px;
     --radius-md: 6px;
     --radius-lg: 8px;
     --radius-xl: 12px;
 
-    /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
 
-    /* Layout */
     --header-height: 70px;
     --max-width: 1200px;
 
-    /* Image aspect ratio - 360:540 = 2:3 */
     --image-aspect-ratio: 2/3;
     --image-width-lg: 225px;
     --image-width-md: 180px;
     --image-width-sm: 140px;
 }
 
-/* ===== RESET & BASE STYLES ===== */
 * {
     margin: 0;
     padding: 0;
@@ -66,13 +58,12 @@
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: var(--font-family), 'serif';
     background-color: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
 }
 
-/* ===== HEADER STYLES ===== */
 header {
     background-color: var(--card-bg);
     box-shadow: var(--shadow-light);
@@ -123,14 +114,12 @@ header {
     box-shadow: 0 0 0 3px rgba(50, 100, 254, 0.1);
 }
 
-/* ===== MAIN CONTAINER ===== */
 .main {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: var(--space-6);
 }
 
-/* ===== SECTION STYLES ===== */
 section {
     margin-bottom: var(--space-12);
 }
@@ -143,7 +132,6 @@ section {
     position: relative;
 }
 
-/* ===== NAVIGATION BUTTONS ===== */
 .movie-list__nav, .movie-slider__nav {
     display: flex;
     gap: var(--space-3);
@@ -156,7 +144,6 @@ section {
     align-items: center;
     justify-content: center;
     padding: var(--space-3) var(--space-5);
-    border: none;
     border-radius: var(--radius-lg);
     font-size: var(--font-size-base);
     font-weight: 500;
@@ -182,7 +169,6 @@ section {
     box-shadow: var(--shadow-medium);
 }
 
-/* ===== CARD STYLES ===== */
 .movie-list__container, .movie-filter__container, .search--result__container{
     display: flex;
     flex-wrap: wrap;
@@ -205,19 +191,16 @@ section {
     box-shadow: var(--shadow-heavy);
 }
 
-/* Small cards - vertical layout */
 .card.small {
     width: var(--image-width-lg);
 }
 
-/* Big cards - horizontal layout */
 .card.big {
     width: 100%;
     flex-direction: row;
     max-height: 500px;
 }
 
-/* ===== IMAGE CONTAINER WITH FIXED ASPECT RATIO ===== */
 .card__top {
     position: relative;
     overflow: hidden;
@@ -225,19 +208,16 @@ section {
     background-color: #f5f5f5;
 }
 
-/* Small cards - fixed aspect ratio container */
 .card.small .card__top {
     width: 100%;
-    aspect-ratio: var(--image-aspect-ratio); /* 2:3 ratio */
+    aspect-ratio: var(--image-aspect-ratio);
 }
 
-/* Big cards image container */
 .card.big .card__top {
-    width: 300px; /* Fixed width for big cards */
-    aspect-ratio: var(--image-aspect-ratio); /* 2:3 ratio */
+    width: 300px;
+    aspect-ratio: var(--image-aspect-ratio);
 }
 
-/* Image styles - always cover the container while maintaining aspect ratio */
 .card__image {
     width: 100%;
     height: 100%;
@@ -249,7 +229,7 @@ section {
 .card__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* This ensures the image covers the container while maintaining aspect ratio */
+    object-fit: cover;
     transition: var(--transition-normal);
 }
 
@@ -257,7 +237,6 @@ section {
     transform: scale(1.05);
 }
 
-/* ===== MOVIE INFO STYLES ===== */
 .movie__info {
     padding: var(--space-4);
     display: flex;
@@ -301,7 +280,6 @@ section {
     color: var(--text-muted);
 }
 
-/* ===== SLIDER STYLES ===== */
 .movie-slider__container {
     position: relative;
     overflow: hidden;
@@ -346,20 +324,12 @@ section {
     transform: scale(1.1);
 }
 
-/* ===== FILTER STYLES ===== */
 .movie-filter {
     background-color: var(--card-bg);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
     box-shadow: var(--shadow-light);
 }
-
-/*.movie-filter__container {*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));*/
-/*    gap: var(--space-6);*/
-/*    margin-bottom: var(--space-6);*/
-/*}*/
 
 .movie-filter h3 {
     margin-bottom: var(--space-3);
@@ -382,7 +352,6 @@ section {
     border-color: var(--accent-primary);
 }
 
-/* ===== RANGE SLIDER STYLES ===== */
 .wrapper {
     background-color: var(--card-bg);
     padding: var(--space-4);
@@ -446,7 +415,6 @@ input[type="range"]::-moz-range-thumb {
     box-shadow: var(--shadow-medium);
 }
 
-/* ===== MODAL STYLES ===== */
 .modal {
     display: none;
     position: fixed;
@@ -473,7 +441,6 @@ input[type="range"]::-moz-range-thumb {
     position: relative;
 }
 
-/* ===== FOOTER STYLES ===== */
 footer {
     background-color: var(--text-primary);
     color: white;
@@ -482,7 +449,6 @@ footer {
     margin-top: var(--space-12);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
     .card.small {
         width: var(--image-width-md);
@@ -491,7 +457,6 @@ footer {
     .movie-list__container, .movie-filter__container{
         gap: var(--space-4);
     }
-
 
 }
 
@@ -508,7 +473,6 @@ footer {
         padding: 0 var(--space-4);
         flex-wrap: wrap;
         height: auto;
-        padding: var(--space-3);
     }
 
     .search {
@@ -524,10 +488,6 @@ footer {
     .movie-list__nav, .movie-slider__nav {
         justify-content: center;
     }
-
-    /*.movie-filter__container {*/
-    /*    grid-template-columns: 1fr;*/
-    /*}*/
 
     .movie__info {
         padding: var(--space-3);
@@ -569,7 +529,7 @@ footer {
         height: 40px;
     }
 
-    /* Big cards become vertical on tablet */
+
     .card.big {
         flex-direction: column;
         max-height: none;
@@ -578,73 +538,5 @@ footer {
     .card.big .card__top {
         width: 100%;
         aspect-ratio: var(--image-aspect-ratio);
-    }
-}
-
-/* ===== UTILITY CLASSES ===== */
-.text-center { text-align: center; }
-.mb-4 { margin-bottom: var(--space-4); }
-.mt-4 { margin-top: var(--space-4); }
-.p-4 { padding: var(--space-4); }
-.hidden { display: none; }
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.gap-4 { gap: var(--space-4); }
-
-/* ===== ACCESSIBILITY ===== */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Focus styles for better accessibility */
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    :root {
-        --border-color: #000000;
-        --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-}
-
-/* Fallback for browsers that don't support aspect-ratio */
-@supports not (aspect-ratio: 1) {
-    .card.small .card__top::before {
-        content: '';
-        display: block;
-        padding-top: 150%; /* 3/2 = 150% for 2:3 ratio */
-    }
-
-    .card.small .card__image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .card.big .card__top::before {
-        content: '';
-        display: block;
-        padding-top: 150%;
-    }
-
-    .card.big .card__image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
     }
 }

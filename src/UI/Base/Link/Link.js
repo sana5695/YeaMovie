@@ -1,4 +1,4 @@
-import {BaseUi} from "../Base/BaseUi.js";
+import {BaseUi} from "../BaseUi.js";
 
 export class Link extends BaseUi {
     static create(options) {

@@ -14,7 +14,6 @@ export class BaseUi {
         this.src = src;
         this.alt = alt;
         this.optionsSelect = optionsSelect || [];
-        console.log(options)
     }
 
     createElem() {

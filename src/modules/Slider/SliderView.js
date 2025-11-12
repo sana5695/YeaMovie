@@ -1,6 +1,6 @@
 import {BaseView} from "../Base/BaseView.js";
-import {Button} from "../../UI/Button/Button.js";
-import {Container} from "../../UI/Container/Container.js";
+import {Button} from "../../UI/Base/Button/Button.js";
+import {Container} from "../../UI/Base/Container/Container.js";
 
 export class SliderView extends BaseView {
     constructor(options) {

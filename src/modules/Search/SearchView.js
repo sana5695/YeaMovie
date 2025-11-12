@@ -1,8 +1,8 @@
 import {BaseView} from "../Base/BaseView.js";
-import {Button} from "../../UI/Button/Button.js";
-import {Input} from "../../UI/Input/Input.js";
-import {Container} from "../../UI/Container/Container.js";
-import {Link} from "../../UI/Link/Link.js";
+import {Button} from "../../UI/Base/Button/Button.js";
+import {Input} from "../../UI/Base/Input/Input.js";
+import {Container} from "../../UI/Base/Container/Container.js";
+import {Link} from "../../UI/Base/Link/Link.js";
 
 export class SearchView extends BaseView {
     constructor(options) {

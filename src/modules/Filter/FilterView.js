@@ -1,8 +1,8 @@
 import {BaseView} from "../Base/BaseView.js";
-import {Select} from "../../UI/Select/Select.js";
-import {InputRange} from "../../UI/InputRange/InputRange.js";
-import {Button} from "../../UI/Button/Button.js";
-import {Container} from "../../UI/Container/Container.js";
+import {Select} from "../../UI/Base/Select/Select.js";
+import {InputRange} from "../../UI/Base/InputRange/InputRange.js";
+import {Button} from "../../UI/Base/Button/Button.js";
+import {Container} from "../../UI/Base/Container/Container.js";
 
 export class FilterView extends BaseView {
     constructor(options) {
@@ -39,7 +39,7 @@ export class FilterView extends BaseView {
 
 
         this.genres = Select.create({
-            ext: 'Жанр',
+            text: 'Жанр',
             optionsSelect: this.genresData,
             root: this.filtersContainer
         });

@@ -31,28 +31,6 @@ export class SliderView extends BaseView {
         this.updateSlider();
     }
 
-    createArrows(root) {
-        this.arrows = Container.create({
-            tag: 'div',
-            root: root,
-            className: ['arrows-container']
-        });
-
-        Button.create({
-            text: '<',
-            root: this.arrows,
-            listener: () => this.onChangeSlide('Prev'),
-            className: ['arrow']
-        });
-
-        Button.create({
-            text: '>',
-            root: this.arrows,
-            listener: () => this.onChangeSlide('Next'),
-            className: ['arrow']
-        });
-    }
-
     mount(root,parentClassName) {
         this.arrows = Container.create({
             tag: 'div',

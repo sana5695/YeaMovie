@@ -1,5 +1,5 @@
 import {BaseCardView} from "./BaseCardView.js";
-import {Text} from "../../UI/Base/Text/Text.js";
+import {Text} from "../Base/Text/Text.js";
 
 export class LargeCardView extends BaseCardView {
     renderContent() {

@@ -8,7 +8,6 @@ export class SectionModel{
     async loadFilms(url) {
        try {
             const rawMovies = await this.movieService.getMovies(url);
-            console.log(rawMovies);
             if (rawMovies && (rawMovies.items || rawMovies.films)) {
                 const movies = this.formatMovies(rawMovies.items || rawMovies.films);
                 this.observer.setState(movies);

@@ -4,7 +4,6 @@ export class BaseController {
     }
 
     setMovies(movies) {
-        console.log(movies);
         this.model.setMovies(movies);
     }
 

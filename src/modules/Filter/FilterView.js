@@ -11,7 +11,6 @@ export class FilterView extends BaseView {
 
     getParams() {
         const params = [];
-        console.log(this.countries)
         if (this.countries.value !== '0') params.push(`countries=${this.countries.value}`);
         if (this.genres.value !== '0') params.push(`genres=${this.genres.value}`);
 
@@ -37,7 +36,6 @@ export class FilterView extends BaseView {
         this.countriesData = this.filters.countries || [];
         this.genresData = this.filters.genres || [];
 
-
         this.genres = Select.create({
             text: 'Жанр',
             optionsSelect: this.genresData,
@@ -49,8 +47,6 @@ export class FilterView extends BaseView {
             optionsSelect: this.countriesData,
             root: this.filtersContainer
         });
-
-        console.log(this.countries);
 
         this.year = InputRange.create(
             'Год',

@@ -1,6 +1,6 @@
-import {Container} from "../../UI/Base/Container/Container.js";
-import {Img} from "../../UI/Base/Img/Img.js";
-import {Text} from "../../UI/Base/Text/Text.js";
+import {Container} from "../Base/Container/Container.js";
+import {Img} from "../Base/Img/Img.js";
+import {Text} from "../Base/Text/Text.js";
 
 export class BaseCardView {
     constructor(movie, size, container) {
@@ -12,6 +12,7 @@ export class BaseCardView {
     render() {
         this.cardContainer = Container.create({tag:'article', root:this.root, className:['card', this.size], data:this.movie.id});
         this.renderContent()
+        return this.cardContainer
     }
 
     renderContent() {

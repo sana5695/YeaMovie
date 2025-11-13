@@ -1,6 +1,6 @@
-import {LargeCardView} from "../modules/Card/LargeCardView.js";
-import {SmallCardView} from "../modules/Card/SmallCardView.js";
-import {ScreenshotsCardView} from "../modules/Card/ScreenshotsCardView.js";
+import {LargeCardView} from "../UI/Card/LargeCardView.js";
+import {SmallCardView} from "../UI/Card/SmallCardView.js";
+import {ScreenshotsCardView} from "../UI/Card/ScreenshotsCardView.js";
 
 export class CardFactory {
     static createCard(movie, size = 'small', container) {

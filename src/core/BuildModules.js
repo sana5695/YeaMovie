@@ -14,13 +14,13 @@ export class BuildModules {
         return this.observers[key];
     }
 
-    createModule(module, observerKey, type, modal) {
+    createModule(module, observerKey) {
         const {ModelClass, ControllerClass, ViewClass, className} = module
         const movieService = this.movieService;
         const observer = this.getObserver(observerKey);
         const config = this.config;
         const model = new ModelClass({movieService, observer});
         const controller = new ControllerClass(model);
-        return new ViewClass({controller, observer, className, config, modal, type});
+        return new ViewClass({controller, observer, className, config});
     }
 }

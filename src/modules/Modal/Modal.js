@@ -1,9 +1,7 @@
 import {CardFactory} from "../../core/CardFactory.js";
-import {MovieService} from "../../core/MovieService.js";
-import {Config} from "../../core/config.js";
 
 export class Modal {
-    constructor(screenshots) {
+    constructor(screenshots, movieService) {
         this.modal = document.createElement('div');
         this.modal.classList.add('modal');
         this.modalContent = document.createElement('div');
@@ -12,36 +10,28 @@ export class Modal {
         document.body.appendChild(this.modal);
         this.screenshots = screenshots;
         this.bindListeners();
-        this.movieService = new MovieService(new Config())
+        this.movieService = movieService
     }
 
-    async openModal(movie, screenshots) {
+    async openModal(movie) {
         if (!movie) {
             return;
         }
 
-        CardFactory.createCard(movie, 'big', this.modal).render()
-        this.screenshots.mount(this.modal, 'modal')
-        this.screenshots.controller.setMovies(await this.getMovieScreenshots(movie.id));
-
-
-        const screenshotsContainer = this.modalContent.querySelector('.screenshots');
-        if (screenshotsContainer && screenshots && Array.isArray(screenshots)) {
-            screenshots.forEach((screenshot) => {
-                if (screenshot) {
-                    const img = document.createElement('img');
-                    img.src = screenshot;
-                    img.alt = title;
-                    screenshotsContainer.appendChild(img);
-                }
-            });
+        CardFactory.createCard(movie, 'big', this.modalContent).render()
+        const screenshots = await this.getMovieScreenshots(movie.id)
+        if (screenshots.length !== 0){
+            this.screenshots.mount(this.modalContent, 'modal')
+            this.screenshots.controller.setMovies(screenshots);
         }
+
         this.modal.style.display = "block";
     }
 
     async getMovieScreenshots(id) {
         const rawMovie = await this.movieService.getMovieScreenshots(id)
-        return (rawMovie.items.map(movie => movie.previewUrl))
+        return rawMovie.items.map(movie => CardFactory.createCard(movie.previewUrl, 'screenshot').render())
+
     }
 
     formatMovies(rawMovies) {
@@ -68,7 +58,7 @@ export class Modal {
     }
 
     closeModal() {
-        this.modal.innerHTML = '';
+        this.modalContent.innerHTML = '';
         this.modal.style.display = "none";
     }
 }

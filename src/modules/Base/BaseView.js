@@ -1,4 +1,3 @@
-import { CardFactory } from "../../core/CardFactory.js";
 import { Container } from "../../UI/Base/Container/Container.js";
 
 export class BaseView {
@@ -13,8 +12,6 @@ export class BaseView {
         this.observer.subscribe((movies) => this.update(movies));
     }
 
-
-
     update(movies) {
         this.render(movies);
     }
@@ -24,19 +21,7 @@ export class BaseView {
         this.container.innerHTML = '';
         if (!movies || !movies.length) return;
         movies.forEach(movie => {
-            CardFactory.createCard(movie, this.type, this.container).render();
-        });
-    }
-
-    cardListener(location) {
-        location.addEventListener('click', event => {
-            if (event.target.closest('.card')) {
-                const id = event.target.closest('.card').dataset.id
-                const movie = this.observer.getState().filter(x => x.id.toString() === id)[0]
-                //this.controller.getMovie(id).then(([movie, screenshots]) => {
-                    this.modal.openModal(movie)
-               // })
-            }
+            this.container.appendChild(movie);
         });
     }
 
@@ -46,6 +31,5 @@ export class BaseView {
             root: root,
             className: [this.className,`${parentClassName}__container`],
         });
-        this.cardListener(this.container)
     }
 }

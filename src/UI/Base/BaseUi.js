@@ -31,7 +31,9 @@ export class BaseUi {
     render() {
         this.createElem();
         this.createOptions()
-        this.root[this.pospend](this.elem);
+        if (this.root){
+            this.root[this.pospend](this.elem);
+        }
         return this.elem;
     }
 }

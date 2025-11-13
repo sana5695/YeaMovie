@@ -1,4 +1,5 @@
 import {BaseModel} from "../Base/BaseModel.js";
+import fetchService from "../../core/FetchService.js";
 
 export class SearchModel extends BaseModel{
     constructor(options) {
@@ -6,9 +7,7 @@ export class SearchModel extends BaseModel{
     }
 
     async search(text) {
-        const rawMovies = await this.movieService.searchMovies(text)
-        const movies = this.formatMovies(rawMovies.films)
-        this.observer.setState(movies)
+        this.observer.setState(await fetchService.search(text))
     }
 }
 

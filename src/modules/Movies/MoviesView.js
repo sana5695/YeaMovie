@@ -1,30 +1,30 @@
 import {Observer} from "../../core/Observer.js";
 import {Container} from "../../UI/Base/Container/Container.js";
-import {SectionController} from "./SectionController.js";
+import {MoviesController} from "./MoviesController.js";
 import {NavButtons} from "../../UI/NavButtons/NavButtons.js";
 import {CardFactory} from "../../core/CardFactory.js";
+import eventBus from "../../core/EventBus.js";
 
-export class SectionView {
+export class MoviesView {
     static create(options) {
-        return new SectionView(options).render();
+        return new MoviesView(options).render();
     }
 
     constructor(options) {
-        const {className, view, data = [], movieService, root, filter, type, modal} = options;
+        const {className, view, data = [], root, filter, type, modal} = options;
         this.className = className
         this.view = view
         this.data = data
         this.observer = new Observer()
-        this.root = root
-        this.movieService = movieService
-        this.observer.subscribe((movies) => this.update(movies));
+        this.root = root || document.querySelector('main')
         this.filter = filter
         this.type = type
         this.modal = modal
 
-        this.controller = new SectionController({
+        this.observer.subscribe((movies) => this.update(movies));
+
+        this.controller = new MoviesController({
             observer: this.observer,
-            movieService: this.movieService,
         })
     }
 
@@ -48,7 +48,7 @@ export class SectionView {
             if (event.target.closest('.card')) {
                 const id = event.target.closest('.card').dataset.id
                 const movie = this.observer.getState().filter(x => x.id.toString() === id)[0]
-                this.modal.openModal(movie)
+                eventBus.publish('OPEN_MODAL', {movie})
             }
         });
     }

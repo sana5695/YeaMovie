@@ -1,11 +1,13 @@
 import {LargeCardView} from "../UI/Card/LargeCardView.js";
 import {SmallCardView} from "../UI/Card/SmallCardView.js";
 import {ScreenshotsCardView} from "../UI/Card/ScreenshotsCardView.js";
+import {ModalCardView} from "../UI/Card/ModalCardView.js";
 
 export class CardFactory {
-    static createCard(movie, size = 'small', container) {
-        if (size === "big") return new LargeCardView(movie, size, container);
-        if (size === "small") return new SmallCardView(movie, size, container);
-        if (size === "screenshot") return new ScreenshotsCardView(movie, size, container);
+    static createCard(movie, type = 'small', container) {
+        if (type === "big") return new LargeCardView(movie, type, container);
+        if (type === "small") return new SmallCardView(movie, type, container);
+        if (type === "screenshot") return new ScreenshotsCardView(movie, type, container);
+        if (type === "modal") return new ModalCardView(movie, type, container);
     }
 }

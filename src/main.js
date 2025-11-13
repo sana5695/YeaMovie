@@ -1,3 +1,5 @@
+import config from "./core/config.js";
+
 import {BuildModules} from "./core/BuildModules.js";
 
 import {ListView} from "./modules/List/ListView.js";
@@ -16,11 +18,10 @@ import {SearchController} from "./modules/Search/SearchController.js";
 import {SearchModel} from "./modules/Search/SearchModel.js";
 import {SearchView} from "./modules/Search/SearchView.js";
 
-import {SectionView} from "./modules/Section/SectionView.js";
-import {Modal} from "./modules/Modal/Modal.js";
+import {MoviesView} from "./modules/Movies/MoviesView.js";
+import {ModalView} from "./modules/Modal/ModalView.js";
 
 const buildModules = new BuildModules();
-const {config, movieService} = buildModules;
 const main = document.querySelector("main");
 
 const list = {
@@ -48,50 +49,40 @@ const search = {
     className:['search']
 }
 
-const modal = new Modal(buildModules.createModule(slider, "screenshots"), movieService);
+new ModalView(buildModules.createModule(slider));
 
-SectionView.create({
-    view: buildModules.createModule(list,"search",modal),
+MoviesView.create({
+    view: buildModules.createModule(list,"search"),
     filter: buildModules.createModule(search),
-    movieService: movieService,
     root: main,
     className:"search",
     type:'small',
-    modal: modal
 })
-SectionView.create({
-    view: buildModules.createModule(slider, "lead-movie",modal),
-    movieService: movieService,
+MoviesView.create({
+    view: buildModules.createModule(slider, "lead-movie"),
     root: main,
     className:"lead-movie",
     data:[config.TOP_250_MOVIES],
     type:'big',
-    modal: modal
 })
-SectionView.create({
-    view: buildModules.createModule(list, "top-movie", modal),
-    movieService: movieService,
+MoviesView.create({
+    view: buildModules.createModule(list, "top-movie"),
     root: main,
     className:"top-movie",
     data:[config.POPULAR_MOVIES, config.POPULAR_SERIES],
     type:'small',
-    modal: modal
 })
-SectionView.create({
-    view: buildModules.createModule(slider, "movie-themes", modal),
-    movieService: movieService,
+MoviesView.create({
+    view: buildModules.createModule(slider, "movie-themes"),
     root: main,
     className:"movie-themes",
     data:[config.ZOMBIE_THEME, config.CATASTROPHE_THEME, config.KIDS_ANIMATION_THEME, config.COMICS_THEME],
     type:'big',
-    modal: modal
 })
-SectionView.create({
-    view: buildModules.createModule(list,"movie-filter", modal),
+MoviesView.create({
+    view: buildModules.createModule(list,"movie-filter"),
     filter: buildModules.createModule(filter),
-    movieService: movieService,
     root: main,
     className:"movie-filter",
     type:'small',
-    modal: modal
 })

@@ -2,6 +2,7 @@ import {BaseView} from "../Base/BaseView.js";
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Input} from "../../UI/Base/Input/Input.js";
 import {Container} from "../../UI/Base/Container/Container.js";
+import config from "../../core/config.js";
 
 export class SearchView extends BaseView {
     constructor(options) {
@@ -14,7 +15,7 @@ export class SearchView extends BaseView {
 
     onSearch = () => {
         this.backButton.style.display = 'block';
-        return(this.config.URL_SEARCH + encodeURIComponent(this.input.value));
+        return(config.URL_SEARCH + encodeURIComponent(this.input.value));
     }
 
     onInput = (e) => {

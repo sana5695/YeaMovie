@@ -1,6 +1,12 @@
-export class MovieService {
-    constructor(config) {
-        this.config = config
+import config from "./config.js";
+
+class MovieService {
+    constructor() {
+        if (MovieService.instance) {
+            return MovieService.instance;
+        }
+        this.config = config;
+        MovieService.instance = this;
     }
 
     async fetchData(url) {
@@ -42,11 +48,10 @@ export class MovieService {
         return await this.fetchData(`${this.config.URL_SEARCH}${encodeURIComponent(keyword)}`);
     }
 
-    async getMovieData(id) {
-        return await this.fetchData(`${this.config.MOVIE_DATA}/${id}`);
-    }
-
     async getMovieScreenshots(id) {
         return await this.fetchData(`${this.config.MOVIE_DATA}/${id}/images?type=STILL&page=1`);
     }
 }
+
+const movieService = new MovieService();
+export default movieService;

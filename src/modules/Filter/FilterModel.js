@@ -1,4 +1,5 @@
 import {BaseModel} from "../Base/BaseModel.js";
+import fetchService from "../../core/FetchService.js";
 
 export class FilterModel extends BaseModel {
     constructor(options) {
@@ -6,6 +7,6 @@ export class FilterModel extends BaseModel {
     }
 
     async getFilters() {
-        return await this.movieService.getFilters()
+        return await fetchService.getFilters()
     }
 }

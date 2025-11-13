@@ -3,6 +3,8 @@ import {Select} from "../../UI/Base/Select/Select.js";
 import {InputRange} from "../../UI/Base/InputRange/InputRange.js";
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Container} from "../../UI/Base/Container/Container.js";
+import config from "../../core/config.js";
+
 
 export class FilterView extends BaseView {
     constructor(options) {
@@ -24,7 +26,7 @@ export class FilterView extends BaseView {
             `yearTo=${yearTo.value}`
         );
 
-        return `${this.config.MOVIE_DATA}?${params.join('&')}`;
+        return `${config.MOVIE_DATA}?${params.join('&')}`;
     }
 
     async getFilters() {

@@ -1,12 +1,13 @@
-import {BaseView} from "../Base/BaseView.js";
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Input} from "../../UI/Base/Input/Input.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 import config from "../../core/config.js";
+import observer from "../../core/Observer.js";
 
-export class SearchView extends BaseView {
-    constructor(options) {
-        super(options);
+export class Search {
+    constructor({className}) {
+        this.className = className;
+        this.observerKey = 'SEARCH';
     }
 
     bindListeners() {
@@ -15,7 +16,7 @@ export class SearchView extends BaseView {
 
     onSearch = () => {
         this.backButton.style.display = 'block';
-        return(config.URL_SEARCH + encodeURIComponent(this.input.value));
+        observer.notify(this.observerKey,config.URL_SEARCH + encodeURIComponent(this.input.value));
     }
 
     onInput = (e) => {
@@ -25,10 +26,10 @@ export class SearchView extends BaseView {
 
     onBack = () => {
         this.backButton.style.display = 'none';
-        return ''
+        observer.notify(this.observerKey,'')
     }
 
-    renderSearch(root, listener) {
+    renderSearch(root) {
         this.searchContainer = Container.create({
             tag: 'div',
             root: root,
@@ -45,28 +46,30 @@ export class SearchView extends BaseView {
         Button.create({
             text: 'Поиск',
             root: this.searchContainer,
-            listener: () => listener(this.onSearch()),
+            listener: this.onSearch,
             className: ['button']
         })
 
         this.backButton = Button.create({
             text: 'Назад',
             root: this.searchContainer,
-            listener: () => listener(this.onBack()),
+            listener: this.onBack,
             className: ['button']
         })
         this.backButton.style.display = 'none';
 
     }
 
-    mount(root, parentClassName, listener) {
+    mount() {
         this.container = Container.create({
             tag: 'div',
             root: document.querySelector('header'),
-            className: [this.className,`${parentClassName}__container`],
+            className: [this.className,`search__container`],
         });
-        this.renderSearch(this.container, listener);
+        this.renderSearch(this.container);
 
         this.bindListeners()
+
+        return this.observerKey
     }
 }

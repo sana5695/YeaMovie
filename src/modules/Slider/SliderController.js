@@ -1,7 +1,7 @@
-import {BaseController} from "../Base/BaseController.js";
-
-
-export class SliderController extends BaseController {
+export class SliderController{
+    constructor(model) {
+        this.model = model;
+    }
     handlePreviousSlide(index) {
         return this.model.previousSlideIndex(index);
     }

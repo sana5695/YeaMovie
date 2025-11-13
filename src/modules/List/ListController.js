@@ -1,3 +1,5 @@
-import {BaseController} from "../Base/BaseController.js";
-
-export class ListController extends BaseController {}
+export class ListController {
+    constructor(model) {
+        this.model = model;
+    }
+}

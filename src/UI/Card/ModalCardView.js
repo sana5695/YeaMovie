@@ -3,16 +3,16 @@ import {Img} from "../Base/Img/Img.js";
 import {Text} from "../Base/Text/Text.js";
 
 export class ModalCardView {
-    constructor(movie, size, container) {
+    constructor(movie, type, container) {
         this.movie = movie;
-        this.size = size
+        this.type = type
         this.root = container
     }
     render() {
         this.cardContainer = Container.create({
-            tag: 'article',
+            tag: 'div',
             root: this.root,
-            className: ['card', this.size],
+            className: [this.type],
             data: this.movie.id
         });
         this.renderContent()
@@ -28,6 +28,7 @@ export class ModalCardView {
         const title = this.movie.title || 'Без названия';
         const year = this.movie.year?.toString() || '';
         const genres = this.movie.genres || '';
+        const description = this.movie.description || '';
 
         this.cardTop = Container.create({
             tag: 'div',
@@ -62,6 +63,12 @@ export class ModalCardView {
             root: this.movieInfoToptitle,
             className: ['movie__info_title']
         })
+
+        Text.create({
+            tag:'p',
+            text:description,
+            root:this.movieInfoToptitle,
+            className:['movie__info_description']})
 
         this.movieInfoSubtitle = Container.create({
             tag: 'div',

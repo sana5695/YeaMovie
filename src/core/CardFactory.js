@@ -8,6 +8,6 @@ export class CardFactory {
         if (type === "big") return new LargeCardView(movie, type, container);
         if (type === "small") return new SmallCardView(movie, type, container);
         if (type === "screenshot") return new ScreenshotsCardView(movie, type, container);
-        if (type === "modal") return new ModalCardView(movie, type, container);
+        if (type === "modal__movie") return new ModalCardView(movie, type, container);
     }
 }

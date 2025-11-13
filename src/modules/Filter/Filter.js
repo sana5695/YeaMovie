@@ -1,14 +1,16 @@
-import {BaseView} from "../Base/BaseView.js";
 import {Select} from "../../UI/Base/Select/Select.js";
 import {InputRange} from "../../UI/Base/InputRange/InputRange.js";
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 import config from "../../core/config.js";
+import fetchService from "../../core/FetchService.js";
+import observer from "../../core/Observer.js";
 
 
-export class FilterView extends BaseView {
-    constructor(options) {
-        super(options);
+export class Filter{
+    constructor({className}) {
+        this.className = className;
+        this.observerKey = 'FILTER';
     }
 
     getParams() {
@@ -26,11 +28,11 @@ export class FilterView extends BaseView {
             `yearTo=${yearTo.value}`
         );
 
-        return `${config.MOVIE_DATA}?${params.join('&')}`;
+        observer.notify(this.observerKey, `${config.MOVIE_DATA}?${params.join('&')}`)
     }
 
     async getFilters() {
-        this.filters = await this.controller.getFilters();
+        this.filters = await fetchService.getFilters();
         this.createFilters()
     }
 
@@ -63,18 +65,20 @@ export class FilterView extends BaseView {
             this.filtersContainer);
     }
 
-    mount(root, parentClassName, listener) {
+    mount(root) {
         this.filtersContainer = Container.create({
             tag: 'div',
             root: root,
-            className: [this.className,`${parentClassName}__filters`]
+            className: [this.className]
         });
         Button.create({
             text: 'Отправить',
             root: this.filtersContainer,
-            listener: () => listener(this.getParams()),
+            listener: this.getParams.bind(this),
             className: ['button']
         })
         this.getFilters()
+
+        return this.observerKey
     }
 }

@@ -1,9 +1,8 @@
-import {Observer} from "../../core/Observer.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 import {MoviesController} from "./MoviesController.js";
-import {NavButtons} from "../../UI/NavButtons/NavButtons.js";
+import {NavButtons} from "../NavButtons/NavButtons.js";
 import {CardFactory} from "../../core/CardFactory.js";
-import eventBus from "../../core/EventBus.js";
+import observer from "../../core/Observer.js";
 
 export class MoviesView {
     static create(options) {
@@ -11,44 +10,44 @@ export class MoviesView {
     }
 
     constructor(options) {
-        const {className, view, data = [], root, filter, type, modal} = options;
-        this.className = className
-        this.view = view
-        this.data = data
-        this.observer = new Observer()
-        this.root = root || document.querySelector('main')
-        this.filter = filter
-        this.type = type
-        this.modal = modal
+        const {className, view, data = [], filter, type} = options;
+        this.className = className;
+        this.view = view;
+        this.data = data;
+        this.root = document.querySelector('main');
+        this.filter = filter;
+        this.type = type;
+        this.id = Math.random().toString(36).substr(2, 9);
+        this.LoadMoviesKey = `LOAD_MOVIES${this.id}`
+        this.GetMoviesKey = `GET_MOVIES${this.id}`
+        this.controller = new MoviesController({observerKey:this.LoadMoviesKey})
 
-        this.observer.subscribe((movies) => this.update(movies));
+        observer.subscribe(this.LoadMoviesKey, this.update.bind(this));
+        observer.subscribe(this.GetMoviesKey, this.onLoadMovies);
 
-        this.controller = new MoviesController({
-            observer: this.observer,
-        })
     }
 
     update(movies) {
-        this.view.controller.setMovies(this.renderCard(movies));
+        this.view.update(this.renderCard(movies));
     }
 
     renderCard(movies) {
         if (movies && movies.length) {
             return movies.map(movie => CardFactory.createCard(movie, this.type).render());
-        }
+        }   else return null;
     }
 
     onLoadMovies = (url) => {
         if (url) this.controller.getMovies(url)
-        else this.observer.setState([]);
+        else this.update()
     }
 
     cardListener(location) {
         location.addEventListener('click', event => {
             if (event.target.closest('.card')) {
                 const id = event.target.closest('.card').dataset.id
-                const movie = this.observer.getState().filter(x => x.id.toString() === id)[0]
-                eventBus.publish('OPEN_MODAL', {movie})
+                const movie = observer.getState(this.LoadMoviesKey).filter(x => x.id.toString() === id)[0]
+                observer.notify('OPEN_MODAL', movie)
             }
         });
     }
@@ -62,10 +61,13 @@ export class MoviesView {
 
         this.cardListener(this.section)
 
-        if (this.filter) this.filter.mount(this.section, this.className, (url) => this.onLoadMovies(url));
-        if (this.data.length > 1) NavButtons.create({root: this.section, data: this.data, listener: this.onLoadMovies});
+        if (this.filter) {
+            const filterKey = this.filter.mount(this.section);
+            observer.subscribe(filterKey, this.onLoadMovies)
+        }
+        if (this.data.length > 1) NavButtons.create({root: this.section, data: this.data, observerKey: this.GetMoviesKey});
 
         this.view.mount(this.section, this.className);
-        this.controller.getMovies(this.data[0]?.url)
+        this.onLoadMovies(this.data[0]?.url)
     }
 }

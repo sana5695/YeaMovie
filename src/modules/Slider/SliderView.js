@@ -1,20 +1,36 @@
-import {BaseView} from "../Base/BaseView.js";
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Container} from "../../UI/Base/Container/Container.js";
+import observer from "../../core/Observer.js";
 
-export class SliderView extends BaseView {
-    constructor(options) {
-        super(options);
+export class SliderView {
+    constructor({ controller, className, observerid }) {
+        this.controller = controller;
+        this.className = className;
+        this.observerid = observerid;
         this.type = this.type || 'big';
         this.slideIndex = 0;
         this.slides = [];
-        this.observer.subscribe(() => this.updateSlides());
+        this.observerKey = `SLIDES_CREATE${this.observerid}`
     }
 
-    updateSlides() {
-        this.slides = Array.from(this.container.querySelectorAll('.card'));
+    updateSlides(movies) {
+        this.slides = movies;
         this.slideIndex = 0;
         this.updateSlider();
+    }
+
+    update(movies) {
+        this.render(movies);
+    }
+
+    render(movies) {
+        if (!this.container) return;
+        this.container.innerHTML = '';
+        if (!movies || !movies.length) return;
+        movies.forEach(movie => {
+            this.container.appendChild(movie);
+        });
+        observer.notify(this.observerKey, movies);
     }
 
     updateSlider() {
@@ -31,7 +47,7 @@ export class SliderView extends BaseView {
         this.updateSlider();
     }
 
-    mount(root,parentClassName) {
+    mount(root, ) {
         this.arrows = Container.create({
             tag: 'div',
             root: root,
@@ -43,12 +59,17 @@ export class SliderView extends BaseView {
             listener: () => this.onChangeSlide('Prev'),
             className: ['arrow']
         });
-        super.mount(this.arrows ,parentClassName);
+        this.container = Container.create({
+            tag: 'div',
+            root: this.arrows,
+            className: [this.className],
+        });
         Button.create({
             text: '>',
             root: this.arrows,
             listener: () => this.onChangeSlide('Next'),
             className: ['arrow']
         });
+        observer.subscribe(this.observerKey, this.updateSlides.bind(this));
     }
 }

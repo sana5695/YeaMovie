@@ -1,14 +1,14 @@
-import {BaseModel} from "../Base/BaseModel.js";
+import observer from "../../core/Observer.js";
 
-export class SliderModel extends BaseModel {
-    constructor(options) {
-        super(options);
+export class SliderModel {
+    constructor(observerid) {
+        this.observerid = observerid;
         this.slideCount = 0;
-        this.observer.subscribe(() => this.updateSlideCount());
+        this.observerKey = `SLIDES_CREATE${this.observerid}`
+        observer.subscribe(this.observerKey,this.updateSlideCount.bind(this));
     }
 
-    updateSlideCount() {
-        const movies = this.observer.getState() || [];
+    updateSlideCount(movies) {
         this.slideCount = movies.length;
     }
 

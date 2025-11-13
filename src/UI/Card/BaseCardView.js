@@ -3,14 +3,14 @@ import {Img} from "../Base/Img/Img.js";
 import {Text} from "../Base/Text/Text.js";
 
 export class BaseCardView {
-    constructor(movie, size, container) {
+    constructor(movie, type, container) {
         this.movie = movie;
-        this.size = size
+        this.type = type
         this.root = container
     }
 
     render() {
-        this.cardContainer = Container.create({tag:'article', root:this.root, className:['card', this.size], data:this.movie.id});
+        this.cardContainer = Container.create({tag:'article', root:this.root, className:['card', this.type], data:this.movie.id});
         this.renderContent()
         return this.cardContainer
     }

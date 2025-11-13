@@ -1,26 +1,34 @@
-export class Observer {
-    constructor(initialState = null) {
-        this.state = initialState;
-        this.observers = [];
+ class Observer {
+    constructor() {
+        if (Observer.instance){
+            return Observer.instance
+        }
+        this.observers = {};
+        this.state = {};
+        Observer.instance = this;
     }
 
-    subscribe(observer) {
-        this.observers.push(observer);
+    subscribe(event, callback) {
+        if (!this.observers[event]) this.observers[event] = [];
+        this.observers[event].push(callback);
     }
 
-    unsubscribe(observer) {
-        this.observers = this.observers.filter(obs => obs !== observer);
+    unsubscribe(event, callback) {
+        if (!this.observers[event]) return;
+        this.observers[event] = this.observers[event].filter(fn => fn !== callback);
     }
 
-    notify(){
-        this.observers.forEach(observer => observer(this.state));
-    }
-    setState(newState) {
-        this.state = newState;
-        this.notify();
+    notify(event, data) {
+        this.state[event] = data;
+        if (!this.observers[event]) return;
+        this.observers[event].forEach(callback => callback(data));
     }
 
-    getState() {
-        return this.state;
-    }
+     getState(event) {
+         if (event) return this.state[event];
+         return this.state;
+     }
 }
+
+const observer = new Observer();
+export default observer;

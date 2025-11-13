@@ -1,29 +1,27 @@
 import {CardFactory} from "../../core/CardFactory.js";
 import {ModalController} from "./ModalController.js";
 import {Container} from "../../UI/Base/Container/Container.js";
-import eventBus from '../../core/EventBus.js';
 import {ModalModel} from "./ModalModel.js";
+import observer from "../../core/Observer.js";
 
 export class ModalView {
     constructor(screenshots) {
         this.screenshots = screenshots;
         this.mount()
         this.controller = new ModalController(new ModalModel())
-        eventBus.subscribe('OPEN_MODAL', this.openModal.bind(this));
+        observer.subscribe('OPEN_MODAL', this.openModal.bind(this));
     }
 
-    async openModal({movie}) {
-        console.log(movie.id)
-
+    async openModal(movie) {
         if (!movie) {
             return;
         }
-
-        CardFactory.createCard(movie, 'modal', this.modalContent).render()
+        console.log(movie)
+        CardFactory.createCard(movie, 'modal__movie', this.modalContent).render()
         const screenshots = await this.getMovieScreenshots(movie.id)
         if (screenshots.length !== 0){
             this.screenshots.mount(this.modalContent, 'modal')
-            this.screenshots.controller.setMovies(screenshots);
+            this.screenshots.render(screenshots);
         }
         this.modal.style.display = "block";
     }

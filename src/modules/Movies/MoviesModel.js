@@ -7,9 +7,10 @@ export class MoviesModel {
         this.observerKey = observerKey;
     }
 
-    async loadFilms(url) {
+    async loadFilms(url, name) {
                 const movies = await fetchService.loadFilms(url);
-                observer.notify(this.observerKey, movies);
+                console.log(movies)
+                observer.notify(this.observerKey, {name:name, movies: movies});
     }
 
 }

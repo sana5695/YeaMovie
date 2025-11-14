@@ -370,6 +370,10 @@ section {
     border-color: var(--accent-primary);
 }
 
+.none{
+    display: none;
+}
+
 .wrapper {
     background-color: var(--card-bg);
     padding: var(--space-4);

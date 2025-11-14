@@ -6,7 +6,7 @@ export class MoviesController {
 
     }
 
-    getMovies(data) {
-        if(data) this.model.loadFilms(data)
+    getMovies(data, name) {
+        if(name) this.model.loadFilms(data, name);
     }
 }

@@ -1,22 +1,21 @@
-import observer from "../../core/Observer.js";
-
 export class SliderModel {
-    constructor(observerid) {
-        this.observerid = observerid;
+    constructor() {
         this.slideCount = 0;
-        this.observerKey = `SLIDES_CREATE${this.observerid}`
-        observer.subscribe(this.observerKey,this.updateSlideCount.bind(this));
+        this.slideIndex = 0;
+        this.slides = [];
     }
 
-    updateSlideCount(movies) {
-        this.slideCount = movies.length;
+    updateSlides(movies) {
+        this.slides = movies;
+        this.slideCount = this.slides.length;
+        this.slideIndex = 0;
     }
 
-    previousSlideIndex(index) {
-        return (index - 1 + this.slideCount) % this.slideCount;
+    previousSlideIndex() {
+        this.slideIndex = ( this.slideIndex - 1 + this.slideCount) % this.slideCount;
     }
 
-    nextSlideIndex(index) {
-        return (index + 1) % this.slideCount;
+    nextSlideIndex() {
+        this.slideIndex = (this.slideIndex + 1) % this.slideCount;
     }
 }

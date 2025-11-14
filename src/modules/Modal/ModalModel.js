@@ -4,6 +4,6 @@ export class ModalModel {
     constructor() {}
 
     async getMovieScreenshots(id) {
-        return  await fetchService.getMovieScreenshots(id)
+        return  fetchService.getMovieScreenshots(id)
     }
 }

@@ -1,10 +1,9 @@
 import {Container} from "../../UI/Base/Container/Container.js";
 
 export class ListView {
-    constructor({ controller, className, observerid }) {
+    constructor({ controller, className}) {
         this.controller = controller;
         this.className = className;
-        this.observerid = observerid;
     }
 
     update(movies) {

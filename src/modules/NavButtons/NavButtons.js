@@ -42,7 +42,7 @@ export class NavButtons{
         this.buttonMap.forEach((url, button) => {
             button.classList.toggle('active', button === activeButton);
         });
-        observer.notify(this.observerKey,this.buttonMap.get(activeButton));
+        observer.notify(this.observerKey,{url:this.buttonMap.get(activeButton), name:activeButton.textContent});
     }
 }
 

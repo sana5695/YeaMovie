@@ -1,66 +1,52 @@
 import {CardFactory} from "../../core/CardFactory.js";
-import {ModalController} from "./ModalController.js";
 import {Container} from "../../UI/Base/Container/Container.js";
-import {ModalModel} from "./ModalModel.js";
-import observer from "../../core/Observer.js";
+import buildModules from "../../core/BuildModules.js";
 
 export class ModalView {
-    constructor(screenshots) {
-        this.screenshots = screenshots;
-        this.mount()
-        this.controller = new ModalController(new ModalModel())
-        observer.subscribe('OPEN_MODAL', this.openModal.bind(this));
+    constructor({className}) {
+        this.className = className;
+        this.screenshotsSlider = buildModules.createModule('slider');
     }
 
-    async openModal(movie) {
-        if (!movie) {
-            return;
+    bindListeners() {
+        document.body.addEventListener('click', (event) => {
+            if (event.target === this.modal) this.hideModal();
+        });
+    }
+
+    showModal({movie, screenshots}) {
+        this.modalContent.innerHTML = '';
+
+        CardFactory.createCard(movie, 'modal__movie', this.modalContent).render();
+
+        if (screenshots.length > 0) {
+            const screenshotCards = screenshots.map(
+                s => CardFactory.createCard(s, 'screenshot').render()
+            );
+
+            this.screenshotsSlider.mount(this.modalContent, 'modal');
+            this.screenshotsSlider.update(screenshotCards);
         }
-        console.log(movie)
-        CardFactory.createCard(movie, 'modal__movie', this.modalContent).render()
-        const screenshots = await this.getMovieScreenshots(movie.id)
-        if (screenshots.length !== 0){
-            this.screenshots.mount(this.modalContent, 'modal')
-            this.screenshots.render(screenshots);
-        }
+
         this.modal.style.display = "block";
     }
 
-
-    bindListeners() {
-        document.body.addEventListener('click', this.handleOverlayClick);
-    }
-
-    handleOverlayClick = (event) => {
-        if (event.target === this.modal) {
-            this.closeModal();
-        }
-    }
-
-    async getMovieScreenshots(id) {
-        const screenshots = await this.controller.getMovieScreenshots(id)
-        return screenshots.map(screenshot => CardFactory.createCard(screenshot, 'screenshot').render())
-    }
-
-    closeModal() {
+    hideModal() {
         this.modalContent.innerHTML = '';
         this.modal.style.display = "none";
     }
 
-    mount(){
+    mount() {
         this.modal = Container.create({
-            tag:'div',
-            className:['modal'],
+            tag: 'div',
+            className: [this.className],
             root: document.body
-        })
+        });
         this.modalContent = Container.create({
-            tag:'div',
-            className:['modal-content'],
+            tag: 'div',
+            className: ['modal-content'],
             root: this.modal
-        })
-
+        });
         this.bindListeners();
-
-        return this.modal
     }
 }

@@ -4,6 +4,9 @@ import {ListView} from "../modules/List/ListView.js";
 import {SliderModel} from "../modules/Slider/SliderModel.js";
 import {SliderController} from "../modules/Slider/SliderController.js";
 import {SliderView} from "../modules/Slider/SliderView.js";
+import {ModalModel} from "../modules/Modal/ModalModel.js";
+import {ModalController} from "../modules/Modal/ModalController.js";
+import {ModalView} from "../modules/Modal/ModalView.js";
 
 class BuildModules {
     constructor() {
@@ -25,6 +28,12 @@ class BuildModules {
                 ViewClass: SliderView,
                 className: ["slider"],
             },
+            modal: {
+                ModelClass: ModalModel,
+                ControllerClass: ModalController,
+                ViewClass: ModalView,
+                className: ["modal"],
+            }
         };
     }
 
@@ -32,11 +41,18 @@ class BuildModules {
     createModule(type) {
         const module = this.modules[type];
         const {ModelClass, ControllerClass, ViewClass, className} = module;
-        const observerid = Math.random().toString(36).slice(2, 9);
-        const model = new ModelClass(observerid);
-        const controller = new ControllerClass(model);
-        return new ViewClass({controller, className, observerid});
+
+        const observerId = Math.random().toString(36).slice(2, 9);
+        const model = new ModelClass(observerId);
+
+        const view = new ViewClass({
+            className,
+            observerId
+        })
+
+        return new ControllerClass(model, view);
     }
+
 }
 
 const buildModules = new BuildModules();

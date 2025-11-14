@@ -7,10 +7,9 @@ import fetchService from "../../core/FetchService.js";
 import observer from "../../core/Observer.js";
 
 
-export class Filter{
+export class FilterView {
     constructor({className}) {
         this.className = className;
-        this.observerKey = 'FILTER';
     }
 
     getParams() {
@@ -28,7 +27,9 @@ export class Filter{
             `yearTo=${yearTo.value}`
         );
 
-        observer.notify(this.observerKey, `${config.MOVIE_DATA}?${params.join('&')}`)
+        console.log(this.observerKey);
+
+        observer.notify(this.observerKey, {url:`${config.MOVIE_DATA}?${params.join('&')}`})
     }
 
     async getFilters() {
@@ -65,7 +66,7 @@ export class Filter{
             this.filtersContainer);
     }
 
-    mount(root) {
+    mount(root, observerKey) {
         this.filtersContainer = Container.create({
             tag: 'div',
             root: root,
@@ -77,8 +78,7 @@ export class Filter{
             listener: this.getParams.bind(this),
             className: ['button']
         })
+        this.observerKey = observerKey;
         this.getFilters()
-
-        return this.observerKey
     }
 }

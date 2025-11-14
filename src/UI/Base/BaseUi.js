@@ -4,7 +4,7 @@ export class BaseUi {
 
 
     constructor(options) {
-        const {text, root, listener, className, data, tag, href, src, alt, optionsSelect, pospend = 'appendChild'} = options;
+        const {text, root, listener, className, data, tag, href, src, alt, optionsSelect} = options;
         this.text = text;
         this.root = root;
         this.className = className;
@@ -15,7 +15,6 @@ export class BaseUi {
         this.src = src;
         this.alt = alt;
         this.optionsSelect = optionsSelect || [];
-        this.pospend = pospend;
     }
 
     createElem() {
@@ -32,7 +31,7 @@ export class BaseUi {
         this.createElem();
         this.createOptions()
         if (this.root){
-            this.root[this.pospend](this.elem);
+            this.root.appendChild(this.elem);
         }
         return this.elem;
     }

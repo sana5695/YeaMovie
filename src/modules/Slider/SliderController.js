@@ -3,9 +3,10 @@ import {BaseController} from "../Base/BaseController.js";
 export class SliderController extends BaseController {
     constructor(model, view) {
         super(model, view)
-         this.view.onChangeSlide = this.handleChangeSlide.bind(this)
+        this.view.onChangeSlide = this.handleChangeSlide.bind(this)
 
     }
+
     handlePreviousSlide() {
         return this.model.previousSlideIndex();
     }
@@ -22,7 +23,7 @@ export class SliderController extends BaseController {
 
     visibleSlide() {
         this.model.slides.forEach((slide, index) => {
-            this.view.updateSlide(slide ,index === this.model.slideIndex ? "flex" : "none")
+            this.view.updateSlide(slide, index === this.model.slideIndex ? "flex" : "none")
         });
     }
 

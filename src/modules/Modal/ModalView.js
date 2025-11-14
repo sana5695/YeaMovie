@@ -17,11 +17,11 @@ export class ModalView {
     showModal({movie, screenshots}) {
         this.modalContent.innerHTML = '';
 
-        CardFactory.createCard(movie, 'modal__movie', this.modalContent).render();
+        CardFactory.createCard(movie, 'modal__movie', this.modalContent);
 
         if (screenshots.length > 0) {
             const screenshotCards = screenshots.map(
-                s => CardFactory.createCard(s, 'screenshot').render()
+                s => CardFactory.createCard(s, 'screenshot')
             );
 
             this.screenshotsSlider.mount(this.modalContent, 'modal');

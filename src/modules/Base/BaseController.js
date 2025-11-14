@@ -1,7 +1,8 @@
 export class BaseController {
-    constructor(model, view) {
+    constructor(model, view, observerId) {
         this.model = model;
         this.view = view;
+        this.observerKey = `OBSERVER__${observerId}`;
     }
 
     mount(options) {

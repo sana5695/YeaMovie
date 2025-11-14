@@ -8,7 +8,7 @@ export class ModalCardView {
         this.type = type
         this.root = container
     }
-    render() {
+    create() {
         this.cardContainer = Container.create({
             tag: 'div',
             root: this.root,

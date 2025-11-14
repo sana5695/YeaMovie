@@ -4,7 +4,7 @@ import {Container} from "../Base/Container/Container.js";
 
 export class ScreenshotsCardView extends BaseCardView {
 
-    render() {
+    create() {
         this.cardContainer = Container.create({tag:'div', root:this.root, className:[this.type], data:this.movie.id});
         this.renderContent()
         return this.cardContainer

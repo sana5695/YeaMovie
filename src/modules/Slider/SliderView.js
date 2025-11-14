@@ -21,25 +21,30 @@ export class SliderView  {
     }
 
     mount(root) {
-        this.arrows = Container.create({
+        this.container = Container.create({
             tag: 'div',
             root: root,
-            className: ['slider-container']
+            className: ['container']
+        });
+        this.slider = Container.create({
+            tag: 'div',
+            root: this.container,
+            className: ['slider'],
         });
         Button.create({
             text: '<',
-            root: this.arrows,
+            root: this.slider,
             listener: () => this.onChangeSlide('Prev'),
             className: ['arrow']
         });
         this.container = Container.create({
             tag: 'div',
-            root: this.arrows,
-            className: [this.className],
+            root: this.slider,
+            className: ['slider__card-container'],
         });
         Button.create({
             text: '>',
-            root: this.arrows,
+            root: this.slider,
             listener: () => this.onChangeSlide('Next'),
             className: ['arrow']
         });

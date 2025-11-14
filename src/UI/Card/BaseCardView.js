@@ -9,8 +9,8 @@ export class BaseCardView {
         this.root = container
     }
 
-    render() {
-        this.cardContainer = Container.create({tag:'article', root:this.root, className:['card', this.type], data:this.movie.id});
+    create() {
+        this.cardContainer = Container.create({tag:'article', root:this.root, className:['card',`${this.type}__card`], data:this.movie.id});
         this.renderContent()
         return this.cardContainer
     }

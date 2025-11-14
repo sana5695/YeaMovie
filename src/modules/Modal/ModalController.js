@@ -17,8 +17,4 @@ export class ModalController extends BaseController {
             screenshots
         });
     }
-
-    mount() {
-        this.view.mount()
-    }
 }

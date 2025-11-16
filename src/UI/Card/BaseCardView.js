@@ -22,8 +22,7 @@ export class BaseCardView {
 
         const poster = this.movie.poster || '';
         const title = this.movie.title || 'Без названия';
-        const year = this.movie.year?.toString() || '';
-        const genres = this.movie.genres || '';
+
 
         this.cardTop = Container.create({
             tag: 'div',
@@ -59,22 +58,6 @@ export class BaseCardView {
             className: ['movie__info_title']
         })
 
-        this.movieInfoSubtitle = Container.create({
-            tag: 'div',
-            root: this.movieInfo,
-            className: ['movie__info__subtitle']
-        })
-        Text.create({
-            tag: 'p',
-            text: year,
-            root: this.movieInfoSubtitle,
-            className: ['movie__info_year']
-        })
-        Text.create({
-            tag: 'p',
-            text: genres,
-            root: this.movieInfoSubtitle,
-            className: ['movie__info_category']
-        })
+
     }
 }

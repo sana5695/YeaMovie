@@ -7,9 +7,9 @@ import {SliderView} from "../modules/Slider/SliderView.js";
 import {ModalModel} from "../modules/Modal/ModalModel.js";
 import {ModalController} from "../modules/Modal/ModalController.js";
 import {ModalView} from "../modules/Modal/ModalView.js";
-import {MoviesModel} from "../modules/Movies/MoviesModel.js";
-import {MoviesController} from "../modules/Movies/MoviesController.js";
-import {MoviesView} from "../modules/Movies/MoviesView.js";
+import {SectionModel} from "../modules/Section/SectionModel.js";
+import {SectionController} from "../modules/Section/SectionController.js";
+import {SectionView} from "../modules/Section/SectionView.js";
 import {FilterModel} from "../modules/Filter/FilterModel.js";
 import {FilterController} from "../modules/Filter/FilterController.js";
 import {FilterView} from "../modules/Filter/FilterView.js";
@@ -26,9 +26,9 @@ class BuildModules {
 
         this.modules = {
             section:{
-                ModelClass: MoviesModel,
-                ControllerClass: MoviesController,
-                ViewClass: MoviesView,
+                ModelClass: SectionModel,
+                ControllerClass: SectionController,
+                ViewClass: SectionView,
                 className: ["section"],
             },
             list: {

@@ -2,7 +2,7 @@ import {BaseController} from "../Base/BaseController.js";
 import {NavButtons} from "../../UI/NavButtons/NavButtons.js";
 import {CardFactory} from "../../core/CardFactory.js";
 
-export class MoviesController extends BaseController {
+export class SectionController extends BaseController {
     constructor(model, view, observerId, options) {
         super(model, view, observerId, options)
         const {
@@ -17,25 +17,23 @@ export class MoviesController extends BaseController {
         this.dataSources = dataSources;
         this.root = root;
 
-        if (this.filterModule){
-            this.filterModule.view.load = this.getData.bind(this);
+        if (this.filterModule) {
+            this.filterModule.load = this.getData.bind(this);
             this.filterModule.view.clear = this.clear.bind(this);
         }
 
-        if (dataSources.length > 0) {
+        if (dataSources.length > 1) {
             this.navButtons = NavButtons.create({data: this.dataSources});
             this.navButtons.onData = this.onData.bind(this);
-            this.getData(dataSources[0]);
         }
 
-
-
+        this.getData(dataSources[0]);
 
         this.mount({
-            root:this.root,
-            displayModule:this.displayModule,
-            navButtons:this.navButtons,
-            filterModule:this.filterModule
+            root: this.root,
+            displayModule: this.displayModule,
+            navButtons: this.navButtons,
+            filterModule: this.filterModule
         })
     }
 
@@ -43,7 +41,7 @@ export class MoviesController extends BaseController {
         if (data && data.url) this.createCards(await this.model.getData(data));
     }
 
-    clear(){
+    clear() {
         this.displayModule.clear();
     }
 

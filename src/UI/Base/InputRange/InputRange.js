@@ -53,7 +53,7 @@ export class InputRange {
 
     createContainer() {
         this.container = document.createElement("div");
-        this.container.classList.add("container");
+        this.container.classList.add("input-container");
         this.wrapper.appendChild(this.container);
     }
 

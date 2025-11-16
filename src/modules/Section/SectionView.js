@@ -1,6 +1,6 @@
 import {Container} from "../../UI/Base/Container/Container.js";
 
-export class MoviesView {
+export class SectionView {
     constructor(options) {
         const {className} = options;
         this.className = className;

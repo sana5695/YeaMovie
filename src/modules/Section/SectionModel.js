@@ -1,6 +1,6 @@
 import fetchService from "../../core/FetchService.js";
 import store from "../../core/Strore.js";
-export class MoviesModel {
+export class SectionModel {
     constructor(){
     }
 

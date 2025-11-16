@@ -1,6 +1,6 @@
 :root {
     --primary-bg: #AADDFF;
-    --secondary-bg: #f8f9fa;
+    --secondary-bg: #ffeac2;
     --card-bg: #ffffff;
     --text-primary: #2d3748;
     --text-secondary: #4a5568;
@@ -57,13 +57,12 @@
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: var(--font-family), serif ;
     background-color: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
 }
 
-/* Header styles */
 header {
     background-color: var(--card-bg);
     box-shadow: var(--shadow-light);
@@ -76,13 +75,16 @@ header {
     padding: 0 var(--space-6);
 }
 
-
 .search {
     display: flex;
     align-items: center;
     gap: var(--space-3);
     max-width: 500px;
     width: 100%;
+}
+
+.logo{
+    margin-right: var(--space-4);
 }
 
 .search--input {
@@ -101,14 +103,10 @@ header {
     box-shadow: 0 0 0 3px rgba(50, 100, 254, 0.1);
 }
 
-/* Main content */
 .main {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: var(--space-6);
-}
-
-section {
 }
 
 .section {
@@ -117,8 +115,9 @@ section {
 }
 
 .movies__nav {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-auto-rows: minmax(50px, 1fr);
 }
 
 .button {
@@ -139,13 +138,12 @@ section {
     white-space: nowrap;
 }
 
-.nav__button{
-
+.filter{
+    display: flex;
 }
 
 .button:hover {
     background-color: var(--secondary-bg);
-    transform: translateY(-2px);
     box-shadow: var(--shadow-light);
 }
 
@@ -156,7 +154,6 @@ section {
     box-shadow: var(--shadow-medium);
 }
 
-/* List and cards */
 .list {
     display: flex;
     flex-wrap: wrap;
@@ -252,7 +249,6 @@ section {
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    flex: 1;
 }
 
 .movie__info__subtitle {
@@ -268,13 +264,12 @@ section {
     color: var(--text-muted);
 }
 
-/* Slider styles */
 .container {
     display: flex;
     align-items: center;
     gap: var(--space-4);
     position: relative;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     padding: 20px;
 }
 
@@ -324,7 +319,6 @@ section {
     transform: scale(1.1);
 }
 
-/* Filter styles */
 .movie-filter {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -335,16 +329,16 @@ section {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    padding: var(--space-4);
 }
 
-.filter > div {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+.selects-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
+
 
 .filter h3 {
-    margin-bottom: var(--space-2);
     font-size: var(--font-size-lg);
     color: var(--text-primary);
 }
@@ -354,7 +348,7 @@ section {
     padding: var(--space-3);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     background-color: var(--card-bg);
     transition: var(--transition-fast);
 }
@@ -364,13 +358,13 @@ section {
     border-color: var(--accent-primary);
 }
 
-.none{
+.none {
     display: none;
 }
 
 .wrapper {
     background-color: var(--card-bg);
-    padding: var(--space-4);
+    padding: var(--space-2);
     border-radius: var(--radius-lg);
     border: 2px solid var(--border-color);
 }
@@ -379,10 +373,9 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--space-2);
-    margin-bottom: var(--space-4);
     font-weight: 600;
     color: var(--accent-primary);
+    margin-bottom: var(--space-2);
 }
 
 .slider-track {
@@ -391,7 +384,17 @@ section {
     background-color: var(--border-color);
     border-radius: var(--radius-sm);
     width: 100%;
+    z-index: 1;
 }
+
+.input-container{
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    position: relative;
+    margin-bottom: 20px;
+}
+
 
 input[type="range"] {
     position: absolute;
@@ -399,6 +402,7 @@ input[type="range"] {
     background: transparent;
     pointer-events: none;
     -webkit-appearance: none;
+    z-index: 2;
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -424,7 +428,6 @@ input[type="range"]::-moz-range-thumb {
     box-shadow: var(--shadow-medium);
 }
 
-/* Modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -437,10 +440,6 @@ input[type="range"]::-moz-range-thumb {
     align-items: center;
     justify-content: center;
     padding: var(--space-6);
-}
-
-.modal[style*="display: block"] {
-    display: flex;
 }
 
 .modal-content {
@@ -484,14 +483,27 @@ footer {
     margin-top: var(--space-12);
 }
 
-/* Responsive design */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
     .card.list__card {
         width: var(--image-width-md);
     }
 
+    .movies__nav {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        grid-auto-rows: minmax(50px, 1fr);
+    }
+
     .movie-filter {
         grid-template-columns: 1fr;
+    }
+
+    .slider {
+        min-height: 200px;
+        max-height: 300px;
+    }
+
+    .card.slider__card .card__top {
+        width: 200px;
     }
 
     .filter {
@@ -527,9 +539,6 @@ footer {
         padding: var(--space-4);
     }
 
-    .movies__nav {
-        justify-content: center;
-    }
 
     .movie__info {
         padding: var(--space-3);
@@ -540,12 +549,10 @@ footer {
     }
 
     .card.slider__card {
-        flex-direction: column;
         max-height: none;
     }
 
     .card.slider__card .card__top {
-        width: 100%;
         height: 300px;
     }
 
@@ -553,8 +560,22 @@ footer {
         flex-direction: column;
     }
 
+    .card.slider__card .movie__info {
+        padding: var(--space-1);
+    }
+
+    .slider__card .movie__info_description {
+        display: -webkit-box;
+        font-size: var(--font-size-xs);
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+
+    .movie__info_year, .movie__info_category {
+        font-size: var(--font-size-xs);
+    }
+
     .modal__movie .card__top {
-        width: 100%;
         height: 300px;
     }
 }
@@ -563,6 +584,11 @@ footer {
     :root {
         --font-size-lg: 1rem;
         --font-size-2xl: 1.25rem;
+    }
+
+    .movies__nav {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-auto-rows: minmax(50px, 1fr);
     }
 
     .card.list__card {
@@ -580,7 +606,6 @@ footer {
     .arrow {
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
         z-index: 10;
     }
 

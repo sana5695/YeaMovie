@@ -29,6 +29,10 @@ class Store {
         return null;
     }
 
+    delete(key) {
+        this.store.delete(key);
+    }
+
 }
 
 const store = new Store();

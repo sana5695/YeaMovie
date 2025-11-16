@@ -1,7 +1,6 @@
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Input} from "../../UI/Base/Input/Input.js";
 import {Container} from "../../UI/Base/Container/Container.js";
-import config from "../../core/config.js";
 
 export class SearchView {
     constructor({className}) {
@@ -12,19 +11,17 @@ export class SearchView {
         this.input.addEventListener('keypress', this.onInput);
     }
 
-    onSearch = () => {
-        this.backButton.style.display = 'block';
-        this.load({url:config.URL_SEARCH + encodeURIComponent(this.input.value)})
-    }
-
     onInput = (e) => {
         const key = e.which || e.keyCode;
-        if (key === 13) this.onSearch()
+        if (key === 13) this.onSearch(this.input.value)
     }
 
-    onBack = () => {
+    showBackButton() {
+        this.backButton.style.display = 'block';
+    }
+
+    hideBackButton() {
         this.backButton.style.display = 'none';
-        this.clear()
     }
 
     renderSearch(root) {
@@ -44,7 +41,7 @@ export class SearchView {
         Button.create({
             text: 'Поиск',
             root: this.searchContainer,
-            listener: this.onSearch,
+            listener: () => this.onSearch(this.input.value),
             className: ['button']
         })
 
@@ -55,7 +52,6 @@ export class SearchView {
             className: ['button']
         })
         this.backButton.style.display = 'none';
-
     }
 
     mount() {
@@ -64,8 +60,8 @@ export class SearchView {
             root: document.querySelector('header'),
             className: [`search__container`],
         });
-        this.renderSearch(this.container);
 
-        this.bindListeners()
+        this.renderSearch(this.container);
+        this.bindListeners();
     }
 }

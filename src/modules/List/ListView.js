@@ -6,17 +6,21 @@ export class ListView {
     }
 
     update(movies) {
-        this.list.innerHTML = '';
+        this.clear()
         this.render(movies);
     }
 
     render(movies) {
-        console.log(movies);
         movies.length ? this.container.style.display = 'flex' : this.container.style.display = 'none'
         if (!movies || !movies.length) return;
         movies.forEach(movie => {
             this.list.appendChild(movie);
         });
+    }
+
+    clear(){
+        this.list.innerHTML = '';
+        this.container.style.display = 'none'
     }
 
     mount(root) {

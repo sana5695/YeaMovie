@@ -12,4 +12,8 @@ export class BaseController {
     update(options) {
         this.view.update(options)
     }
+
+    clear(){
+        this.view.clear()
+    }
 }

@@ -65,7 +65,7 @@ class BuildModules {
     }
 
 
-    createModule(type) {
+    createModule(type,options) {
         const module = this.modules[type];
         const {ModelClass, ControllerClass, ViewClass, className} = module;
 
@@ -73,7 +73,7 @@ class BuildModules {
 
         const model = new ModelClass();
         const view = new ViewClass({className})
-        return new ControllerClass(model, view, observerId);
+        return new ControllerClass(model, view, observerId, options);
     }
 
 }

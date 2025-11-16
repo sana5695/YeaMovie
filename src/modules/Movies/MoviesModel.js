@@ -1,22 +1,18 @@
 import fetchService from "../../core/FetchService.js";
-
+import store from "../../core/Strore.js";
 export class MoviesModel {
     constructor(){
-        this.state = new Map
     }
 
     async getData(dataSource){
-        return this.state.has(dataSource.name)
-            ? this.state.get(dataSource.name)
+        return store.has(dataSource.name)
+            ? store.get(dataSource.name)
             : await this.loadData(dataSource);
     }
 
     async loadData(dataSource){
-        console.log('fetching...')
         const moviesData = await fetchService.loadFilms(dataSource.url);
-        if (dataSource.name){
-            this.state.set(dataSource.name, moviesData)
-        }
+        if (dataSource.name) store.set(dataSource.name, moviesData)
         return moviesData;
     }
 }

@@ -1,6 +1,7 @@
 import {CardFactory} from "../../core/CardFactory.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 import buildModules from "../../core/BuildModules.js";
+import store from "../../core/Strore.js";
 
 export class ModalView {
     constructor({className}) {
@@ -12,10 +13,20 @@ export class ModalView {
         document.body.addEventListener('click', (event) => {
             if (event.target === this.modal) this.hideModal();
         });
+
+        document.querySelector('main').addEventListener('click', (event) => {
+           if (event.target.closest('.card')) {
+               console.log(event.target.closest('.card'));
+               console.log(store.store)
+               this.openModal(event.target.closest('.card'));
+           }
+        })
     }
 
     showModal({movie, screenshots}) {
         this.modalContent.innerHTML = '';
+
+        console.log(movie)
 
         CardFactory.createCard(movie, 'modal__movie', this.modalContent);
 

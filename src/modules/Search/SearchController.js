@@ -1,14 +1,7 @@
 import {BaseController} from "../Base/BaseController.js";
 
 export class SearchController extends BaseController {
-    constructor(model, view, observerId) {
+    constructor(model, view) {
         super(model, view)
-        this.observerKey = `FILTER__${observerId}`
-    }
-
-
-
-    mount(root) {
-        this.view.mount(root, this.observerKey)
     }
 }

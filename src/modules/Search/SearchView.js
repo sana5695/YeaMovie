@@ -2,12 +2,10 @@ import {Button} from "../../UI/Base/Button/Button.js";
 import {Input} from "../../UI/Base/Input/Input.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 import config from "../../core/config.js";
-import observer from "../../core/Observer.js";
 
 export class SearchView {
     constructor({className}) {
         this.className = className;
-        this.observerKey = 'SEARCH';
     }
 
     bindListeners() {
@@ -16,7 +14,7 @@ export class SearchView {
 
     onSearch = () => {
         this.backButton.style.display = 'block';
-        observer.notify(this.observerKey,{url:config.URL_SEARCH + encodeURIComponent(this.input.value)});
+        this.load({url:config.URL_SEARCH + encodeURIComponent(this.input.value)})
     }
 
     onInput = (e) => {
@@ -26,7 +24,7 @@ export class SearchView {
 
     onBack = () => {
         this.backButton.style.display = 'none';
-        observer.notify(this.observerKey,{url:''});
+        this.clear()
     }
 
     renderSearch(root) {
@@ -60,8 +58,7 @@ export class SearchView {
 
     }
 
-    mount(root, observerKey) {
-        this.observerKey = observerKey;
+    mount() {
         this.container = Container.create({
             tag: 'div',
             root: document.querySelector('header'),

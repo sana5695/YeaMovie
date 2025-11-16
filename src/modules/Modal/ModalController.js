@@ -1,20 +1,26 @@
-import observer from "../../core/Observer.js";
 import {BaseController} from "../Base/BaseController.js";
+import store from "../../core/Strore.js";
 
 export class ModalController extends BaseController {
     constructor(model, view) {
         super(model, view)
-        observer.subscribe('OPEN_MODAL', this.handleOpenModal.bind(this));
+        this.view.openModal = this.handleOpenModal.bind(this)
     }
 
 
-    async handleOpenModal(movie) {
-        if (!movie) return;
-        const screenshots = await this.model.getMovieScreenshots(movie.id);
-
+    async handleOpenModal(card) {
+        console.log(card)
+        const id = card.dataset.id;
+        console.log(id)
+        const movie = store.find(id);
+        console.log(movie);
+        const screenshots = await this.model.getMovieScreenshots(id);
         this.view.showModal({
             movie,
             screenshots
         });
     }
+
+
+
 }

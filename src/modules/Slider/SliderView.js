@@ -1,23 +1,35 @@
 import {Button} from "../../UI/Base/Button/Button.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 
-export class SliderView  {
+export class SliderView {
     constructor({className}) {
         this.className = className;
     }
 
     update(movies) {
-        this.container.innerHTML = '';
-        this.render(movies);
+        this.clear()
+        this.movies = movies;
+        this.visibleSlide(0)
+        this.render(this.movies);
     }
 
     render(movies) {
         if (!movies || !movies.length) return;
-        movies.forEach(movie => this.container.appendChild(movie));
+        movies.forEach(movie => this.cardContainer.appendChild(movie));
     }
 
     updateSlide(slide, style) {
-            slide.style.display = style
+        slide.style.display = style
+    }
+
+    visibleSlide(slideIndex) {
+        this.movies.forEach((slide, index) => {
+            this.updateSlide(slide, index === slideIndex ? "flex" : "none")
+        });
+    }
+
+    clear() {
+        this.cardContainer.innerHTML = '';
     }
 
     mount(root) {
@@ -37,7 +49,7 @@ export class SliderView  {
             listener: () => this.onChangeSlide('Prev'),
             className: ['arrow']
         });
-        this.container = Container.create({
+        this.cardContainer = Container.create({
             tag: 'div',
             root: this.slider,
             className: ['slider__card-container'],

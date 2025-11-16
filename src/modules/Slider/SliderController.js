@@ -3,6 +3,7 @@ import {BaseController} from "../Base/BaseController.js";
 export class SliderController extends BaseController {
     constructor(model, view) {
         super(model, view)
+        this.type = 'slider'
         this.view.onChangeSlide = this.handleChangeSlide.bind(this)
 
     }
@@ -12,24 +13,16 @@ export class SliderController extends BaseController {
     }
 
     handleNextSlide() {
-        return this.model.nextSlideIndex();
+        return this.model.nextSlideIndex()
     }
 
     handleChangeSlide(direction) {
-        if (direction === 'Prev') this.handlePreviousSlide();
-        else this.handleNextSlide();
-        this.visibleSlide();
-    }
-
-    visibleSlide() {
-        this.model.slides.forEach((slide, index) => {
-            this.view.updateSlide(slide, index === this.model.slideIndex ? "flex" : "none")
-        });
+        if (direction === 'Prev') this.view.visibleSlide(this.handlePreviousSlide())
+        else this.view.visibleSlide(this.handleNextSlide())
     }
 
     update(options) {
         super.update(options);
-        this.model.updateSlides(options)
-        this.visibleSlide(this.model.slides);
+        this.model.updateSlides(options.length)
     }
 }

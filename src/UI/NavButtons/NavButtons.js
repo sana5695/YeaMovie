@@ -1,27 +1,38 @@
 import {Container} from "../Base/Container/Container.js";
 import {Button} from "../Base/Button/Button.js";
-import observer from "../../core/Observer.js";
+import {Text} from "../Base/Text/Text.js";
 
 export class NavButtons{
     static create(options){
         return new NavButtons(options).render();
     }
+
     constructor(options){
-        const {data, observerKey} = options;
+        const {data} = options;
         this.data = data;
-        this.observerKey = observerKey;
         this.buttonMap = new Map();
     }
+
     render() {
         this.navigation = Container.create({
             tag: 'nav',
             className: [`movies__nav`]
         })
 
+        if(this.data.length === 1){
+            Text.create({
+                tag: 'h3',
+                text: this.data[0].name,
+                root: this.navigation,
+                className: ['collection__name']
+            });
+
+            return this
+        }
+
         this.data.forEach((buttonData, index) => {
             const classes = ['button', 'nav__button'];
             if (index === 0) classes.push('active');
-
             const button = Button.create({
                 text: buttonData.name,
                 root: this.navigation,
@@ -30,7 +41,6 @@ export class NavButtons{
             });
             this.buttonMap.set(button, buttonData.url);
         });
-
         return this;
     }
 
@@ -43,8 +53,9 @@ export class NavButtons{
             button.classList.toggle('active', button === activeButton);
         });
 
-        observer.notify(this.observerKey,{url:this.buttonMap.get(activeButton), name:activeButton.textContent});
+        this.onData({url:this.buttonMap.get(activeButton), name:activeButton.textContent});
     }
+
 
     mount(root){
         root.appendChild(this.navigation);

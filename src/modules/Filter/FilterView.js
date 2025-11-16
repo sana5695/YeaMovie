@@ -4,8 +4,6 @@ import {Button} from "../../UI/Base/Button/Button.js";
 import {Container} from "../../UI/Base/Container/Container.js";
 import config from "../../core/config.js";
 import fetchService from "../../core/FetchService.js";
-import observer from "../../core/Observer.js";
-
 
 export class FilterView {
     constructor({className}) {
@@ -27,9 +25,7 @@ export class FilterView {
             `yearTo=${yearTo.value}`
         );
 
-        console.log(this.observerKey);
-
-        observer.notify(this.observerKey, {url:`${config.MOVIE_DATA}?${params.join('&')}`})
+        this.load({url:`${config.MOVIE_DATA}?${params.join('&')}`})
     }
 
     async getFilters() {
